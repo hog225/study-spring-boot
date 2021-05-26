@@ -5,10 +5,9 @@ flyway
 
 
 1. [자료1](https://lifeonroom.com/study-lab/flyway/)
-
+2. https://flywaydb.org/documentation/usage/gradle/
 
 ## 접속
-1. http://localhost:8080
-2. http://localhost:8080/h2
+
 
 
