@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang='en' xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>CAR LIST</title>
+  </head>
+  <body>
+    <h1>CAR LIST</h1>
+    <table border="1">
+      <tr>
+        <th>idx</th>
+        <th>model name</th>
+        <th>passenger Capacity</th>
+        <th>company name</th>
+        <th>company nation</th>
+      </tr>
+      <tr th:each="car: ${carList}">
+        <td th:text="${car.id}"></td>
+        <td th:text="${car.modelName}"></td>
+        <td th:text="${car.passengerCapacity}"></td>
+        <td th:text="${car.company.companyName}"></td>
+        <td th:text="${car.company.companyNation}"></td>
+      </tr>
+    </table>
+
+  </body>
+</html>

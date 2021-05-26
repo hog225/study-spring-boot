@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang='en' xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>COMPANY LIST</title>
+  </head>
+  <body>
+    <h1>COMPANY LIST</h1>
+    <table border="1">
+      <tr>
+        <th>idx</th>
+        <th>company name</th>
+        <th>company nation</th>
+      </tr>
+      <tr th:each="company: ${companyList}">
+        <td th:text="${company.id}"></td>
+        <td th:text="${company.companyName}"></td>
+        <td th:text="${company.companyNation}"></td>
+      </tr>
+    </table>
+    <nav style="text-align: center">
+      <ul class="pagination"
+        th:with="start=${T(Math).floor(companyList.number/10)*10 + 1},
+                 last=(${start + 9 < companyList.totalPages ? start + 9 : companyList.totalPages})">
+        <li>
+          <a th:href="@{./companyList(page=1)}" aria-label="First">
+            <span aria-hidden="true">FIRST</span>
+          </a>
+        </li>
+        <li th:class="${companyList.first} ? 'disabled'">
+          <a th:href="${companyList.first} ? '#' : @{./companyList(page = ${companyList.number})}" aria-label="Previous">
+            <span aria-hidden="true"><</span>
+          </a>
+        </li>
+
+        <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == companyList.number + 1} ? 'active'">
+          <a th:text="${page}" th:href="@{./companyList(page=${page})}"></a>
+        </li>
+
+        <li th:class="${companyList.last} ? 'disabled'">
+          <a th:href="${companyList.last} ? '#' : @{./companyList(page = ${companyList.number + 2})}" aria-label="Next">
+            <span aria-hidden="true">></span>
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+  </body>
+</html>
