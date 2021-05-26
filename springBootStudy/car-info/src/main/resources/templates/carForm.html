@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en' xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>CAR FORM</title>
+  </head>
+  <body>
+    <h1>Car FORM</h1>
+    <form method ="POST" th:action="@{/saveCar}"
+      th:object="${carInputDto}">
+      <div class="form-group">
+        <label for="modelName">model name</label>
+        <input th:name="modelName"
+                id="modelName"
+                type="text"
+                class="form-control"
+                name="modelName" />
+      </div>
+      <div class="form-group">
+        <label for="passengerCapacity">passengerCapacity</label>
+        <input th:name="passengerCapacity"
+                id="passengerCapacity"
+                type="text"
+                class="form-control"
+                name="passengerCapacity" />
+      </div>
+
+      <div class="form-group">
+        <label for="companyId">company</label>
+        <Select th:name="companyId">
+          <option th:each="company :${companyList}"
+                  th:value="${company.id}"
+                  th:utext="${company.companyName}"></option>
+        </Select>
+      </div>
+      <div class="form-group">
+        <button type="submit" class = "btn btn-primary btn-block">REGISTER</button>
+      </div>
+    </form>
+  </body>
+</html>
