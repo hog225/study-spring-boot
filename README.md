@@ -9,7 +9,7 @@ sdk install springboot
 ## Gradle 
 1. Gradle refresh => .\gradlew --refresh-dependencies
 
-### dependencies 
+### Gradle dependencies 
 1. compile vs implementation
   - 동일한 동작이지만 종속성에 따라 어떻게 Build 할지가 다르다 compile의 경우 직.간접 종속성 모두를 build 하나 implementation의 경우는 직접적인 종속성만을 build 한다 더 빠른 build가 가능하다. 
   - annotationProcessor 자동으로 생성되는 코드를 Build 시 성능면에서(Compiler가 코드 전체를 다 봐야 함으로 ) 불리한데 이를 개선해 주는것
@@ -26,7 +26,7 @@ sdk install springboot
 3. export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64(원하는 버전)
 
 ```
-### Spring Boot 
+## Spring Boot 
 1. [application.properties](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties-data-migration)
 
 
@@ -84,8 +84,15 @@ sdk install springboot
   - 이 Class는 하나 이상의 @Bean Method를 제공한다는 것을 Spring에 알려줌 
 15. @Value("${spring.datasource.password}")
   - 필드에 선언되어서 application property 나 각종 Systemproperty의 값을 필드에 주입해 준다. 
-  
-
+  - 어떤 Path에 접근할지를 설정하고 싶다면 해당 클레스에 PropertySource("classpath:application.properties")를 설정해 준다.
+    - "classpath:application.properties"
+    - "file:src/test/resources/application.properties"
+16. @DataJpaTest
+  -  JPA 관련 테스트 설정만 로드 @Entity 애노테이션이 적용된 클래스를 스캔하여 내장 테스트 DB를 구성 만약 실제 DB를 사용하고 싶다면 아래 애노테이션이 필요 
+  ```
+  @AutoConfigureTestDatabase(replace = @AutoConfigureTestDatabase.Replace.NONE)
+  ```
+  - 기본적으로 @Transactional 애노테이션을 포함하고 있어 테스트가 완료되면 자동으로 롤백...
 
 
 ### Spring Legacy
@@ -122,7 +129,8 @@ DispatchServlet 이후 실행되면 특정 혹은 모든 요청을 가로채서 
   </constructor-arg>
 </bean>
 ```
-
+## 용어 
+1. Generic: Type "T"를 사용 클래스에서 사용할 타입을 외부에서 설정하는 타입
 ## 관행 
 1. Naming: Entity는 단수 SQL Table 은 복수
 

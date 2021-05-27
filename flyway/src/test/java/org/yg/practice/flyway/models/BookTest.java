@@ -6,8 +6,10 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.yg.practice.flyway.daos.BookDao;
+import org.yg.practice.flyway.configs.FlywayConfig;
+import org.yg.practice.flyway.repositorys.BookDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,6 +21,9 @@ public class BookTest extends ResetDatabase {
 
   @Autowired
   private BookDao bookDao;
+
+  @Value("${spring.datasource.url}")
+  private String testValue;
 
   @Test
   public void createSuccess(){
@@ -39,8 +44,22 @@ public class BookTest extends ResetDatabase {
     Optional<Book> bookFromDB = bookDao.findById(1L);
     assertThat(bookFromDB.isPresent()).isEqualTo(true);
     assertThat(bookFromDB.get().getName()).isEqualTo(book.getName());
+    assertThat(bookFromDB.get().getAuthor()).isEqualTo(book.getAuthor());
+    System.out.println(bookFromDB.get().getAuthor());
+    
 
     System.out.println("BookTest.createSuccess !");
+  }
+
+  @Test
+  public void test(){
+      FlywayConfig flywayConfig = new FlywayConfig();
+      System.out.println("flywayConfig url : " + flywayConfig.getUrl());
+  }
+
+  @Test
+  public void valueTest(){
+      System.out.println("ULR: "+ testValue);
   }
   
 }
