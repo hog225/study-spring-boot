@@ -32,7 +32,9 @@ public class SampleController {
       i -> {
         SampleDTO dto = SampleDTO.builder()
           .sno(i)
-          .first("First.." + i).last("Last.." + i).regTime(LocalDateTime.now()).build();
+          .first("First.." + i)
+          .last("Last.." + i)
+          .regTime(LocalDateTime.now()).build();
         return dto;
       }).collect(Collectors.toList());
     model.addAttribute("list", list);

@@ -15,6 +15,13 @@
       [[${state.index}]] ----- [[${dto}]]
     </li>
   </ul>
+
+  <ul>
+    <li th:each="dto, state : ${list}" th:if="${dto.sno%5 == 0} ? ${dto.sno}">
+      
+    </li>
+  </ul>
+
 </body>
  
 

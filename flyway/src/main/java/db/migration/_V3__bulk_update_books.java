@@ -1,6 +1,6 @@
 
-// SQL Migration 이랑 충돌 발생하는듯 ? 
-// 주석 나중에사용시 file이름 V3__bulk_update_books.java 로 변경 
+// // SQL Migration 이랑 충돌 발생하는듯 ? 
+// // 주석 나중에사용시 file이름 V3__bulk_update_books.java 로 변경 
 
 // package db.migration;
 

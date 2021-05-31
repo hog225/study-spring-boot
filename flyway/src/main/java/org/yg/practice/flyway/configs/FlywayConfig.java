@@ -8,8 +8,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.flywaydb.core.Flyway;
 
 @Configuration
-//@PropertySource("file:src/test/resources/application.properties")
-@PropertySource("classpath:application.properties") // 요게없으면 Path를 못 찾았다. 이유는 ?
+//@PropertySource("file:src/main/resources/application.properties")
+//@PropertySource(value = "file:/src/test/resources/properties/application.properties")
+@PropertySource("classpath:application-test.properties") // 요게없으면 Path를 못 찾았다. 이유는 ?
 public class FlywayConfig {
   
   @Value("${spring.datasource.url}")

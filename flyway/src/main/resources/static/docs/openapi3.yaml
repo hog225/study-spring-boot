@@ -1,0 +1,60 @@
+openapi: 3.0.1
+info:
+  title: User API
+  description: User Api Description
+  version: 0.1.0
+servers:
+- url: http://localhost:8080
+tags: []
+paths:
+  /api/user/{id}:
+    get:
+      tags:
+      - api
+      summary: User Information
+      description: User Information CURD
+      operationId: user
+      parameters:
+      - name: id
+        in: path
+        description: user id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-user-id973951768'
+              examples:
+                user:
+                  value: "{\r\n  \"resultCode\" : \"OK\",\r\n  \"data\" : {\r\n  \
+                    \  \"id\" : 1,\r\n    \"account\" : \"sldfkme12\",\r\n    \"email\"\
+                    \ : \"power@gmail.com\",\r\n    \"phoneNumber\" : \"010483726384\"\
+                    ,\r\n    \"createdAt\" : null,\r\n    \"updatedAt\" : null\r\n\
+                    \  }\r\n}"
+components:
+  schemas:
+    api-user-id973951768:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            phoneNumber:
+              type: string
+              description: phone number
+            id:
+              type: number
+              description: id
+            email:
+              type: string
+              description: email
+            account:
+              type: string
+              description: account
+        resultCode:
+          type: string
+          description: response code

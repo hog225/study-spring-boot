@@ -1,3 +1,4 @@
+//V3__bulk_update_books 가 주석처리 되어 있기 때문에 해당 Test 일단 주석
 package org.yg.practice.flyway.models;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

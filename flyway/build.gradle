@@ -3,14 +3,26 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
     id "org.flywaydb.flyway" version "7.9.1"
+    //id "org.asciidoctor.convert" version "1.5.9.2"
+    id 'org.asciidoctor.jvm.convert' version '3.2.0'
+    id 'com.epages.restdocs-api-spec' version '0.11.4'
+    
 }
 
 group = 'org.yg.practice'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+
+
+
+
 repositories {
 	mavenCentral()
+}
+
+configurations {
+    asciidoctorExt
 }
 
 dependencies {
@@ -23,17 +35,34 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok' // annotationProcessor 자동으로 생성되는 코드를 Build 시 성능면에서(Compiler가 코드 전체를 다 봐야 함으로 ) 불리한데 이를 개선해 주는것 
     implementation 'org.mariadb.jdbc:mariadb-java-client' //version 주의 version을 설정할 경우 자바 버전에 따라 JDBC 클레스를 찾을 수 없다는 에러가 발생하기도 한다. 
     implementation "org.flywaydb:flyway-core:7.9.1"
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor' 
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.11.4' //2.2
 
 }
 
+
+ext { 
+	snippetsDir = file('build/generated-snippets')
+}
+
+
 test {
+    outputs.dir snippetsDir
 	useJUnitPlatform()
 }
 
+asciidoctor { 
+    configurations 'asciidoctorExt'
+	inputs.dir snippetsDir 
+	dependsOn test 
+}
+
+
+
 // database 1개 
 flyway {
-    url = 'jdbc:mariadb://localhost:3308/flyway'
+    url = 'jdbc:mariadb://localhost:3306/flyway'
     user = 'root'
     password = 'root'
     locations = ['classpath:db/migration']
@@ -56,5 +85,30 @@ flyway {
 //     locations = ['classpath:db/migration']
 // }
 
+openapi3 {
+    server = 'http://localhost:8080'
+    title = 'User API'
+    description = 'User Api Description'
+    // tagDescriptionsPropertiesFile = 'src/docs/tag-descriptions.yaml'
+    version = '0.1.0'
+    format = 'yaml'
 
+    copy {
+        from "build/api-spec"
+        into "src/main/resources/static/docs/"
+    }
+}
+
+// build boot jar 실행 
+bootJar {
+    dependsOn asciidoctor
+    // from ("build/docs/asciidoc") { 
+	// 	into 'static/docs'
+    // }
+    copy {
+        from "${asciidoctor.outputDir}"
+        into "src/main/resources/static/docs/"
+    }
+
+}
 

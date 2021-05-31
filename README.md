@@ -129,8 +129,20 @@ DispatchServlet 이후 실행되면 특정 혹은 모든 요청을 가로채서 
   </constructor-arg>
 </bean>
 ```
+
+### Test (JUnit)
+1. MockMvc
+  - 배포 없이 Spring MVC 동작을 확인 
+  - Test Case 메서드는 DispatchServlet에 요청할 데이터를 설정하면 MockMvc가 서블릿에게 요청을 보냄 그럼 서블릿이 매핑정보를 보고 Controller를 호출 그러면 이 결과를 해석하면 됨 
+  - 주요 메서드
+    - perform: chaining 형식으로 request와 Return을 처리할 수 있게 해줌, andDo 매서드를 체이닝으로 호출해 그 안에서 동작을 정의 해주면 된다. 
+
+### Trouble Shoot
+1. @SpringBootTest 설정시 java.lang.IllegalStateException: Unable to find a @SpringBootConfiguration, you need to use @ContextConfiguration or @SpringBootTest(classes=...) with your test 에러가 발생하면 파일의 폴더 위치가 정확한지 확인한다. 
+
 ## 용어 
 1. Generic: Type "T"를 사용 클래스에서 사용할 타입을 외부에서 설정하는 타입
+
 ## 관행 
 1. Naming: Entity는 단수 SQL Table 은 복수
 
