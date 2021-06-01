@@ -94,7 +94,20 @@ sdk install springboot
   ```
   - 기본적으로 @Transactional 애노테이션을 포함하고 있어 테스트가 완료되면 자동으로 롤백...
 
+17. @ EnableWebMvc
+  - DispatchServlet의 기본 전략을 사용하는게 아닌 Custome 하게 전략을 짤 수 있다. ViewResolver를 커스텀 한 폴더로 지정한다던지 ResourceHandler를 이용해 특정폴더의 Resource를 Handling 하게 한다든지 할 수 있다. 아래 코드 처럼 사용한다. 
+  ```
+    @Configuration
+    @EnableWebMvc
+    public class WebMvcConfiguration implements WebMvcConfigurer {
+        @Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
 
+        }
+    }
+
+  ```
 ### Spring Legacy
 
 1.component-scan
