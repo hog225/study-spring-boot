@@ -43,6 +43,7 @@ public class PreUsernamePasswordAuthenticationFilter implements Filter{
             if (Optional.ofNullable(user).isPresent() && Optional.ofNullable(user.getUsername()).isPresent()){
                 //아래 과정이 끝나면 User 인증이 된 것임 
                 //BCryptPasswordEncoder 는 시간에 따라 값이 변경 된다. 
+                // SHA 방식등 다양한 인코딩 방식을 사용할  수 이싿. 
                 if (((BCryptPasswordEncoder)passwordEncoder).matches(password, user.getPassword())){
 
                 }
