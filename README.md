@@ -108,6 +108,8 @@ sdk install springboot
     }
 
   ```
+18. @EntityScan(basePackage = "")
+  - 만약 메인 Package 외부에 Entity가 있다면 해당 애노테이션을 써서 Bean으로 등록 해줘야 함 
 ### Spring Legacy
 
 1.component-scan
