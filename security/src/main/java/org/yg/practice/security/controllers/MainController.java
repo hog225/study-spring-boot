@@ -28,7 +28,6 @@ public class MainController {
     @Autowired
     public MainController(MfaService mfaService) {
         this.mfaService = mfaService;
-        
     }
 
     @GetMapping(value = {"", "/", "/prelogin", "/login"})
@@ -48,7 +47,7 @@ public class MainController {
 
     @GetMapping(value = "/main")
     public String mainPage(Model model, HttpSession httpSession){
-        log.info("main page");
+
         CustomUserDetails customUserDetails = (CustomUserDetails) httpSession.getAttribute("userInfo");
         MfaDto mfaDto = mfaService.getMfa(customUserDetails.getUsername());
         model.addAttribute("mfa", mfaDto);

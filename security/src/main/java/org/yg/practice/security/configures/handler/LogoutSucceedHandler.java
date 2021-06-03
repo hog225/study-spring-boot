@@ -1,4 +1,4 @@
-package org.yg.practice.security.handler;
+package org.yg.practice.security.configures.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;

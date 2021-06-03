@@ -2,11 +2,11 @@ package org.yg.practice.security.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.yg.practice.security.datas.entities.Mfa;
+import org.yg.practice.security.datas.entities.MfaEntity;
 
 @Repository
-public interface MfaRepository extends JpaRepository<Mfa, Long> {
+public interface MfaRepository extends JpaRepository<MfaEntity, Long> {
     
-    Mfa findByUsername(String username);
+    MfaEntity findByUsername(String username);
     
 }

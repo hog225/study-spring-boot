@@ -3,7 +3,7 @@ package org.yg.practice.security.datas.dto;
 import java.io.Serializable;
 import java.util.Optional;
 
-import org.yg.practice.security.datas.entities.Mfa;
+import org.yg.practice.security.datas.entities.MfaEntity;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -18,7 +18,7 @@ public class MfaProveDto implements Serializable{
     private String secretKey;
     private String type;
 
-    public MfaProveDto(Mfa mfa){
+    public MfaProveDto(MfaEntity mfa){
         if (Optional.ofNullable(mfa).isPresent()){
             this.secretKey = mfa.getSecretKey();
             this.type = mfa.getType();    

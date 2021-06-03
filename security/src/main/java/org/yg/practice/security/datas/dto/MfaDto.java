@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Optional;
 
 
-import org.yg.practice.security.datas.entities.Mfa;
+import org.yg.practice.security.datas.entities.MfaEntity;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -26,7 +26,7 @@ public class MfaDto implements Serializable {
     private String type;
     private String otpNumber;
 
-    public MfaDto(Mfa mfa){
+    public MfaDto(MfaEntity mfa){
         if(Optional.ofNullable(mfa).isPresent()){
             this.id = mfa.getId();
             this.username = mfa.getUsername();

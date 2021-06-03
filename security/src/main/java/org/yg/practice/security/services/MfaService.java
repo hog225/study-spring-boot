@@ -3,7 +3,7 @@ package org.yg.practice.security.services;
 import org.yg.practice.security.datas.dto.MfaDto;
 import org.yg.practice.security.datas.dto.MfaInitDto;
 import org.yg.practice.security.datas.dto.MfaProveDto;
-import org.yg.practice.security.datas.entities.User;
+
 // import org.yg.practice.security.repositories.UserRepository;
 
 public interface MfaService {

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.yg.practice.security.datas.dto.MfaDto;
-import org.yg.practice.security.datas.entities.User;
+import org.yg.practice.security.datas.entities.UserEntity;
 import org.yg.practice.security.services.MfaService;
 import org.yg.practice.security.services.UserService;
 
@@ -43,7 +43,7 @@ public class PreUsernamePasswordAuthenticationFilter implements Filter{
         if (httpServletRequest.getServletPath().equals("/prelogin") && httpServletRequest.getMethod().equals("POST")){
             String username = httpServletRequest.getParameter("username");
             String password = httpServletRequest.getParameter("password");
-            User user = userService.getUser(username);
+            UserEntity user = userService.getUser(username);
             log.info("doFilter", user.toString());
             System.out.println("do filtering ~~~~~~");
             if (Optional.ofNullable(user).isPresent() && Optional.ofNullable(user.getUsername()).isPresent()){

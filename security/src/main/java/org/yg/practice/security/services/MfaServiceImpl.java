@@ -30,13 +30,13 @@ public class MfaServiceImpl implements MfaService {
 
     @Override
     public MfaInitDto setMfa(MfaInitDto mfaInitDto){
-        mfaRepository.save(new Mfa(mfaInitDto));
+        mfaRepository.save(new MfaEntity(mfaInitDto));
         return mfaInitDto;
     }
 
     @Override
     public MfaDto setMfa(MfaDto mfaDto){
-        mfaRepository.save(new Mfa(mfaDto));
+        mfaRepository.save(new MfaEntity(mfaDto));
         return mfaDto;
     }
 

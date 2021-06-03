@@ -14,9 +14,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.yg.practice.security.configures.filter.CustomUsernamePasswordAuthenticationFilter;
 import org.yg.practice.security.configures.filter.PreUsernamePasswordAuthenticationFilter;
 import org.yg.practice.security.configures.provider.CustomDaoAuthenticationProvider;
-import org.yg.practice.security.handler.FailureHandler;
-import org.yg.practice.security.handler.LogoutSucceedHandler;
-import org.yg.practice.security.handler.SuccessHandler;
+import org.yg.practice.security.configures.handler.FailureHandler;
+import org.yg.practice.security.configures.handler.LogoutSucceedHandler;
+import org.yg.practice.security.configures.handler.SuccessHandler;
 import org.yg.practice.security.services.UserService;
 
 import lombok.extern.slf4j.Slf4j;

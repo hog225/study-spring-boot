@@ -15,12 +15,12 @@ public class UserServiceImpl implements UserService{
     }
     
     @Override
-    public User getUser(String username){
-        return getUser(User.builder().username(username).build());
+    public UserEntity getUser(String username){
+        return getUser(UserEntity.builder().username(username).build());
     }
 
     @Override
-    public User getUser(User user){
+    public UserEntity getUser(UserEntity user){
         return userRepository.findByUsername(user.getUsername());
     }
 }

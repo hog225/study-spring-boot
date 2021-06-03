@@ -1,6 +1,6 @@
 package org.yg.practice.security.configures.provider;
 
-import org.yg.practice.security.exception.OtpNotApproveException;
+import org.yg.practice.security.exception.OtpNotProveException;
 import org.yg.practice.security.services.CustomUserDetailsService;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -70,7 +70,6 @@ public class CustomDaoAuthenticationProvider extends AbstractUserDetailsAuthenti
         Assert.notNull(this.userDetailsService, "A UserDetailsService must be set");
     }
 
-    //Filter에서 넘어온 정보를 처리한다. 
     @Override
     protected final UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication)
             throws AuthenticationException {
@@ -80,7 +79,7 @@ public class CustomDaoAuthenticationProvider extends AbstractUserDetailsAuthenti
             String otp = (String) authentication.getDetails();
             UserDetails loadedUser = null;
             if (otp == null) {
-                loadedUser = this.getUserDetailsService().loadUserByUsername(username); // 구현체의 것이 호출 되겠지 
+                loadedUser = this.getUserDetailsService().loadUserByUsername(username);
             } else {
                 loadedUser = ((CustomUserDetailsService)this.getUserDetailsService()).loadUserByUsername(username, otp);
             }
@@ -90,7 +89,7 @@ public class CustomDaoAuthenticationProvider extends AbstractUserDetailsAuthenti
                         "UserDetailsService returned null, which is an interface contract violation");
             }
             return loadedUser;
-        } catch (OtpNotApproveException | UsernameNotFoundException ex) {
+        } catch (OtpNotProveException | UsernameNotFoundException ex) {
             mitigateAgainstTimingAttack(authentication);
             throw ex;
         } catch (InternalAuthenticationServiceException ex) {

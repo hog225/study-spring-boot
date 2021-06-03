@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.yg.practice.security.datas.entities.*;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
-    User findByUsername(String username);
+public interface UserRepository extends JpaRepository<UserEntity, Long>{
+    UserEntity findByUsername(String username);
     
 }
