@@ -1,4 +1,4 @@
-package org.yg.practice.security.service;
+package org.yg.practice.security.services;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

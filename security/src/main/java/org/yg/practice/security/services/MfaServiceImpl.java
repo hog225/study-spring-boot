@@ -1,4 +1,4 @@
-package org.yg.practice.security.service;
+package org.yg.practice.security.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,13 +1,19 @@
-package org.yg.practice.security.service;
+package org.yg.practice.security.services;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.yg.practice.security.datas.entities.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.yg.practice.security.datas.dto.CustomUserDetails;
 import org.yg.practice.security.exception.OtpNotApproveException;
 import org.yg.practice.security.util.OTPUtil;
 
+@Service
 public class CustomeUserDetailsServiceImpl implements CustomUserDetailsService{
     private final UserService userService;
     private final MfaService mfaService;
@@ -41,9 +47,10 @@ public class CustomeUserDetailsServiceImpl implements CustomUserDetailsService{
         CustomUserDetails.CustomUserDetailsBuilder customUserDetailsBuilder = CustomUserDetails.builder();
         customUserDetailsBuilder.username(user.getUsername())
             .password(user.getPassword())
-            .accountNonExpired(false)
+            .authorities(Arrays.stream(user.getRoles().split(",")).map(x-> new SimpleGrantedAuthority(x)).collect(Collectors.toList()))
+            .accountNonExpired(true)
             .accountNonLocked(true)
-            .credentialsNonExpired(false)
+            .credentialsNonExpired(true)
             .enabled(true);
 
         return customUserDetailsBuilder.build();

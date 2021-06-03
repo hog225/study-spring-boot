@@ -8,13 +8,16 @@ import javax.persistence.Table;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.AccessLevel;
 
 @Getter
 @Entity
 @ToString
 @EqualsAndHashCode(callSuper = false)
 @Table(name="users", schema = "security")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
 
     @Id

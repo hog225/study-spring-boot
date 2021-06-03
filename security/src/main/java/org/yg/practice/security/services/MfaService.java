@@ -1,4 +1,4 @@
-package org.yg.practice.security.service;
+package org.yg.practice.security.services;
 
 import org.yg.practice.security.datas.dto.MfaDto;
 import org.yg.practice.security.datas.dto.MfaInitDto;
