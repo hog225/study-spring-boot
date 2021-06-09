@@ -98,9 +98,10 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        log.info("doFilter" + ' ' + httpServletRequest.getServletPath() + ' ' + httpServletRequest.getPathInfo()+ ' '+ httpServletRequest.getMethod());
+        log.info("doFilter" + ' ' + httpServletRequest.getServletPath() + ' ' + ' '+ httpServletRequest.getMethod());
         
         if (!requiresAuthentication(httpServletRequest, httpServletResponse)){
+            log.info("Auth no need");
             chain.doFilter(request, response);
             return;
         }

@@ -9,9 +9,11 @@
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
     <script type="text/javascript" th:inline="javascript">
-        var mfa = /*[[${session.mfa}]]*/ false;
-
+        // var mfa = [[${session.mfa}]];
+        var mfa = false;
+        console.log(mfa)
         if(mfa == null || mfa == undefined || mfa == false){
+            console.log("mfactor error")
             location.href = "/login?error=invalid";
         }
 

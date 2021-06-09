@@ -28,6 +28,11 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
 	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.4.5'
+	// metric
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	compile 'io.micrometer:micrometer-registry-prometheus:latest.release' // Prometheus 가 데이터를 가져감 
+	//compile 'io.micrometer:micrometer-registry-elastic:latest.release' // Elastic 한테 데이터를 줘야 함 
+	testImplementation 'io.micrometer:micrometer-registry-elastic:latest.release'
 
 }
 

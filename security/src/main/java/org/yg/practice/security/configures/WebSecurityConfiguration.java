@@ -33,7 +33,7 @@ import org.yg.practice.security.services.MfaService;
 // 만약 메인 Package 외부에 Entity가 있다면 아래 애노테이션을 써서 Bean으로 등록 해줘야 함 
 //@EntityScan(basePackage = {"org.yg.practice.security"}, basePackageClassed = {Jsr310Converters.class})
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
-    private String permitalURL = "/login,/,/mfator,/purelogin,/prelogin";
+    private String permitalURL = "/login,/,/mfactor,/purelogin,/prelogin";
     private final CustomUserDetailsService customUserDetailsService;
     private final UserService userService; 
     private final MfaService mfaService;

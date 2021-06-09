@@ -37,6 +37,7 @@ public class MainController {
 
     @GetMapping("/mfactor")
     public String mfactor() {
+        log.info("Controller mfactor");
         return "mfactor";
     }
 
