@@ -1,5 +1,6 @@
 # carinfo 
 
+test mockMVC
 JPA, thymeleaf, metric, spring actuator 
 - From 패스트캠퍼스 스프링아카데미아 
 

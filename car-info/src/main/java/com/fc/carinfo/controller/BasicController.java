@@ -70,6 +70,14 @@ public class BasicController {
     return "carList";
   }
 
+  @RequestMapping("/carListAll")
+  public String carListAll(Model model){
+    List<Car> carList = carService.getCarListAll();
+    model.addAttribute("carList", carList);
+    return "carListAll";
+  }
+
+
   @RequestMapping("/carListNoPage")
   public String carListNoPage(Model model){
     List<Car> carList = carService.getCarList();

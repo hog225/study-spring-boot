@@ -2,12 +2,16 @@ package com.fc.carinfo.domain;
 
 import javax.persistence.*;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import java.util.*;
 
 @Entity
 @Table(name="car")
 @Data
+@Builder
+@AllArgsConstructor
 public class Car extends BaseEntity{
   public Car(){}
   public Car(String modelName, Company company, Integer passengerCapacity){

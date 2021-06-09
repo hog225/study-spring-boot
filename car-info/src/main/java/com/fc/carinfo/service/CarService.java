@@ -51,6 +51,10 @@ public class CarService {
     return carRepository.saveAll(car);
   }
 
+  public List<Car> getCarListAll(){
+      return carRepository.findAll();
+  }
+
   public List<Car> getCarList(){
     //return carRepositoryCustom.getCarListByFetchJoin();
     return carRepository.getCarListByFetchJoin();
