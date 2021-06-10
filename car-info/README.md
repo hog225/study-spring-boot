@@ -16,8 +16,12 @@ JPA, thymeleaf, metric, spring actuator
 
 
 ## 프로메테우스 
-docker run -p 9090:9090 prom/prometheus
-docker run -p 9090:9090 -v E:\GitProject\SpringBootStudy\car-info\src\main\resources\docker-server-properties\prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+1. docker run -p 9090:9090 prom/prometheus
+2. docker run -p 9090:9090 -v E:\GitProject\SpringBootStudy\car-info\src\main\resources\docker-server-properties\prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+
+## 그라파나 
+1. docker run -p 3000:3000 grafana/grafana
 
 ## seige http 부하 툴 
 siege -c3 -t1m 192.xxx.xxx.xxx:8080/hello/30
+siege -c2 -t5m 192.xxx.xxx.xxx:8080/hello/30

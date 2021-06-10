@@ -17,6 +17,7 @@ public class actuatorController {
         return "hello world";
     }
 
+    //Random 하게 500 에러를 발생 시킴
     @GetMapping("/hello/{percent}")
     public String world2(@PathVariable Integer percent) throws InterruptedException{
         if (random.nextInt(100) < percent){
