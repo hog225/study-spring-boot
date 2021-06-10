@@ -1,6 +1,6 @@
 # flyway 
 
-flyway, Spring REST Docs, Mock
+flyway, Spring REST Docs
 - From 패스트캠퍼스 스프링아카데미아 
 
 
