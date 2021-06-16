@@ -1,0 +1,9 @@
+<!--JPA 와 다르게 파라미터로 필요한 영역을 전달해서 처리 가능 그래서 필요한 부분을 파라미터로 전달하는 방식으로 공통의 레이아웃을 사용할 수 있음 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <th:block th:replace="~{/layout/layout1 :: setContent(~{this::content})}">
+        <th:block th:fragment="content">
+            <h1>exTemplate Page</h1>
+        </th:block>
+    </th:block>
+</html>

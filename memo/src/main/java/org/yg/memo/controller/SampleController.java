@@ -20,9 +20,10 @@ import org.apache.catalina.connector.RequestFacade;
 @RequestMapping("/sample")
 @Log4j2
 public class SampleController {
-  @GetMapping("/ex1")
+  @GetMapping({"/ex1", "/exTemplate"})
   public void ex1(){
-    log.info("ex1...................");
+    log.info("ex111.........edd...........");
+
     
   }
   
@@ -65,7 +66,7 @@ public class SampleController {
     log.info("ex3");
   }
 
-  @GetMapping("/exLayout1")
+  @GetMapping({"/exLayout1", "/exSidebar"})
   public void exLayout1(){
     log.info("exLayout ..........");
   }
