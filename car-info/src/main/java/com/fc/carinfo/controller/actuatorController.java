@@ -4,14 +4,22 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.fc.carinfo.service.RequestOrderUsecase;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class actuatorController {
+public class ActuatorController {
 
     private final Random random = new Random();
+    private final RequestOrderUsecase requestOrderUsecase;
+
+    public ActuatorController(RequestOrderUsecase requestOrderUsecase){
+        this.requestOrderUsecase = requestOrderUsecase;
+    }
+
     @GetMapping("/hello")
     public String world(){
         return "hello world";
@@ -28,5 +36,11 @@ public class actuatorController {
         }
         return "world";
         
+    }
+
+    //Random 하게 500 에러를 발생 시킴
+    @GetMapping("/order")
+    public void order() throws InterruptedException{
+        requestOrderUsecase.requestOrder();
     }
 }

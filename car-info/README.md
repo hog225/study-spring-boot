@@ -21,7 +21,13 @@ JPA, thymeleaf, metric, spring actuator
 
 ## 그라파나 
 1. docker run -p 3000:3000 grafana/grafana
+2. http://localhost:3000
+3. 초기 접속정보 admin/admin
 
 ## seige http 부하 툴 
 siege -c3 -t1m 192.xxx.xxx.xxx:8080/hello/30
 siege -c2 -t5m 192.xxx.xxx.xxx:8080/hello/30
+
+## Others
+1. 로그인 횟수 정보, 특정 클릭 DB 가 맞을까 Metric이 맞을까 ?
+
