@@ -1,0 +1,9 @@
+<!--basic.html 에서 아래 내용을 사용함  -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+  <th:block th:fragment="content">
+    <h1>blog list</h1>
+  </th:block>
+</th:block>
+</html>
