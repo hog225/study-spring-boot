@@ -110,6 +110,12 @@ sdk install springboot
   ```
 18. @EntityScan(basePackage = "")
   - 만약 메인 Package 외부에 Entity가 있다면 해당 애노테이션을 써서 Bean으로 등록 해줘야 함 
+
+19. @ExtendWith(xxx.class)
+  - 지정된 클래스의 확장기능 사용 
+
+20. @Disabled 
+   - Integration Test시 해당 Annotation이 있는 Test 클래스는 Test를 하지 않는다. 
 ### Spring Legacy
 
 1.component-scan
