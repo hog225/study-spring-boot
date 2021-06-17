@@ -1,7 +1,7 @@
 # carinfo 
 
 test mockMVC
-JPA, thymeleaf, metric, spring actuator 
+JPA, thymeleaf, metric, spring actuator, TDD 방법론(inventory) 
 - From 패스트캠퍼스 스프링아카데미아 
 
 
@@ -27,6 +27,9 @@ JPA, thymeleaf, metric, spring actuator
 ## seige http 부하 툴 
 siege -c3 -t1m 192.xxx.xxx.xxx:8080/hello/30
 siege -c2 -t5m 192.xxx.xxx.xxx:8080/hello/30
+
+## TDD
+
 
 ## Others
 1. 로그인 횟수 정보, 특정 클릭 DB 가 맞을까 Metric이 맞을까 ?
