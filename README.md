@@ -81,7 +81,7 @@ sdk install springboot
 13. @BeforeEach 
   - Test 실행시 사이사이에 실행 
 14. @Configuration
-  - 이 Class는 하나 이상의 @Bean Method를 제공한다는 것을 Spring에 알려줌 
+  - 이 Class는 하나 이상의 @Bean Method를 제공한다는 것을 Spring에 알려줌, Class 레벨에 해당 애노테이션이 있어야 메소드레벨에서 @Bean으로 등록된 빈들의 싱글톤을 보장한다. 즉 Bean 애노테이션이 메소드에 있다면 반듯이 필요 하다
 15. @Value("${spring.datasource.password}")
   - 필드에 선언되어서 application property 나 각종 Systemproperty의 값을 필드에 주입해 준다. 
   - 어떤 Path에 접근할지를 설정하고 싶다면 해당 클레스에 PropertySource("classpath:application.properties")를 설정해 준다.
