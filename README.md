@@ -41,6 +41,7 @@ sdk install springboot
 4. @Autowired 
 	- 의존성 주입에 사용됨 web.xml constructor-agrg 태그 선언하고 @Bean으로 의존성 주입하는 방법과 동일
 	의존성 주입이란 클래스 내부에서 객체를 할당하는게 아닌 외부에서 받는것
+  - 주입방식은 생성자 주입, setter, field 주입 방식이 있다. 참고로 field injection은 좋은 방법이 아니다. feild 인젝션은 단일책임 위반, 의존성 숨음, final로 선언불가에서 오는 불변성회손의 문제가 있을 수 있다. 
 5. @Component
 	- Class 에서 빈을 직접 등록하기 위함 @ComponentScan 애노테이션으로 @Component 애노테이션을 스캔 하여 빈으로 등록해 줄 수 있음 
 6. @RestControllerAdvice

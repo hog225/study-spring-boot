@@ -25,5 +25,12 @@ public class Blog extends BaseEntity{
     @Column(length = 50, nullable = false)
     private String writer;
 
+    public void changeTitle(String title){
+        this.title = title;
+    }
+
+    public void changeContent(String content){
+        this.title = content;
+    }
 
 }
