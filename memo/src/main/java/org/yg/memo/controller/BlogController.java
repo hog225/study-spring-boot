@@ -27,7 +27,7 @@ public class BlogController {
 
     @GetMapping("/list")
     //아래 @ModelAttribute는 없어도 되는 것 같다.
-    public void list(@ModelAttribute PageRequestDTO pageRequestDTO, Model model){
+    public void list(PageRequestDTO pageRequestDTO, Model model){
         log.info("list " + pageRequestDTO);
         model.addAttribute("result", service.getList(pageRequestDTO));
 
@@ -63,6 +63,21 @@ public class BlogController {
 
         redirectAttributes.addFlashAttribute("msg", gno);
         return "redirect:/blog/list";
+    }
+
+    @PostMapping("/modify")
+    public String modify(BlogDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes){
+        log.info("post modify ...............");
+        log.info("dto: " + dto);
+
+        service.modify(dto);
+
+        redirectAttributes.addAttribute("page", requestDTO.getPage());
+        redirectAttributes.addAttribute("type", requestDTO.getType());
+        redirectAttributes.addAttribute("keyword", requestDTO.getKeyword());
+        redirectAttributes.addAttribute("gno", dto.getGno());
+        return "redirect:/blog/read";
+
     }
 
 

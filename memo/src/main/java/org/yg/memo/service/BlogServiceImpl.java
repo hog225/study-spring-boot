@@ -1,5 +1,7 @@
 package org.yg.memo.service;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,12 @@ import org.yg.memo.dto.BlogDTO;
 import org.yg.memo.dto.PageRequestDTO;
 import org.yg.memo.dto.PageResultDTO;
 import org.yg.memo.entity.Blog;
+import org.yg.memo.entity.QBlog;
 import org.yg.memo.repository.BlogRepository;
 
 import javax.swing.text.html.Option;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 @Slf4j
@@ -57,9 +61,12 @@ public class BlogServiceImpl implements BlogService{
     @Override
     public PageResultDTO<BlogDTO, Blog> getList(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("gno").descending());
-        Page<Blog> result = repo.findAll(pageable);
 
-        return new PageResultDTO<>(result, entity->entityToDto(entity));
+        BooleanBuilder booleanBuilder = getSearch(requestDTO);
+        Page<Blog> result = repo.findAll(booleanBuilder, pageable);
+
+        Function<Blog, BlogDTO> fn = entity->entityToDto(entity);
+        return new PageResultDTO<>(result, fn);
 
     }
 
@@ -77,6 +84,38 @@ public class BlogServiceImpl implements BlogService{
     @Override
     public void remove(Long gno) {
         repo.deleteById(gno);
+    }
+
+    // QueryDSL 조건
+    private BooleanBuilder getSearch(PageRequestDTO requestDTO){
+        String type = requestDTO.getType();
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        QBlog qBlog = QBlog.blog;
+        String keyword = requestDTO.getKeyword();
+
+        BooleanExpression expression = qBlog.gno.gt(0L);
+        booleanBuilder.and(expression);
+
+        if (type == null || type.trim().length() == 0){
+            return booleanBuilder;
+        }
+
+        BooleanBuilder conditionBuilder = new BooleanBuilder();
+
+        if (type.contains("t")){
+            conditionBuilder.or(qBlog.title.contains(keyword));
+        }
+        if (type.contains("c")){
+            conditionBuilder.or(qBlog.content.contains(keyword));
+        }
+        if (type.contains("w")){
+            conditionBuilder.or(qBlog.writer.contains(keyword));
+        }
+
+        booleanBuilder.and(conditionBuilder);
+        return booleanBuilder;
+
     }
 
 

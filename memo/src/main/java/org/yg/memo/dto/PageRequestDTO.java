@@ -13,6 +13,9 @@ import org.springframework.data.domain.Sort;
 public class PageRequestDTO {
     private int page;
     private int size;
+    private String type;
+    private String keyword;
+
 
     public PageRequestDTO(){
         this.page = 1; //JPA 의 경우 Page 번호는 0부터 시작한다.

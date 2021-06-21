@@ -28,6 +28,14 @@ JPA, thymeleaf, metric, spring actuator, TDD 방법론(inventory)
 siege -c3 -t1m 192.xxx.xxx.xxx:8080/hello/30
 siege -c2 -t5m 192.xxx.xxx.xxx:8080/hello/30
 
+## sleuth
+1. frontend http://localhost:8080/order/request back엔드로 전달
+2. backend http://localhost:8080/order/100
+
+### zipkin
+1. curl -sSL https://zipkin.io/quickstart.sh | bash -s
+1. java -jar zipkin.jar [github](https://github.com/openzipkin/zipkin)
+
 ## TDD
 
 

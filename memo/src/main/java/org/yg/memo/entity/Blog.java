@@ -25,12 +25,13 @@ public class Blog extends BaseEntity{
     @Column(length = 50, nullable = false)
     private String writer;
 
+    // entity 에서는 왠만하면 Setter는 만들지 않는다.
     public void changeTitle(String title){
         this.title = title;
     }
 
     public void changeContent(String content){
-        this.title = content;
+        this.content = content;
     }
 
 }
