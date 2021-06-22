@@ -41,6 +41,7 @@ dependencies {
 	testImplementation 'io.micrometer:micrometer-registry-elastic:latest.release'
 	implementation "org.springframework.cloud:spring-cloud-starter-sleuth"
 	implementation "org.springframework.cloud:spring-cloud-sleuth-zipkin"
+	implementation 'org.springframework.kafka:spring-kafka'
 
 }
 

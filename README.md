@@ -195,5 +195,7 @@ DispatchServlet 이후 실행되면 특정 혹은 모든 요청을 가로채서 
 ### 명령어 
 1. docker ps --format {{.Names}}
 1. docker-compose exec mongodb mongo product-db --quiet --eval "db.products.find()"
+2. docker ps - container id 
+3. docker exec -it [[containerID]] /bin/bash
 
 
