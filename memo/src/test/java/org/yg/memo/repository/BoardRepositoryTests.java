@@ -12,6 +12,7 @@ import org.yg.memo.entity.Member;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -77,6 +78,39 @@ class BoardRepositoryTests {
 
         System.out.println(Arrays.toString(arr));
 
+
+    }
+
+    @Test
+    @Transactional
+    public void testRead4(){
+
+        Board board = boardRepository.getOne(100L);
+
+
+        System.out.println(board.toString());
+
+
+    }
+
+    @Test
+    public void getBoardMemberInfoByBnoTest(){
+        // Map 으로 가져올 경우 안됨
+        Map<String, String> result = boardRepository.getBoardMemberInfoByBno(100L);
+
+
+        System.out.println(Arrays.toString(result.keySet().toArray()));
+    }
+
+    @Test
+    public void testSearch1(){
+        boardRepository.search1();
+    }
+
+    @Test
+    public void testSearchPage(){
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+        Page<Object[]> result = boardRepository.searchPage("t", "1", pageable);
 
     }
 }

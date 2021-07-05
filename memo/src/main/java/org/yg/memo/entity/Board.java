@@ -22,4 +22,12 @@ public class Board extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     private Member writer; // Bord 와 Member 간의 관계 Many: One, FK: PK
 
+    public void changeTitle(String title){
+        this.title =title;
+    }
+
+    public void changCount(String content){
+        this.content = content;
+    }
+
 }

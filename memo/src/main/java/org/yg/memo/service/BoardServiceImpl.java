@@ -11,7 +11,9 @@ import org.yg.memo.dto.PageResultDTO;
 import org.yg.memo.entity.Board;
 import org.yg.memo.entity.Member;
 import org.yg.memo.repository.BoardRepository;
+import org.yg.memo.repository.ReplyRepository;
 
+import javax.transaction.Transactional;
 import java.util.function.Function;
 
 @Service
@@ -19,6 +21,7 @@ import java.util.function.Function;
 @Log4j2
 public class BoardServiceImpl implements BoardService{
     private final BoardRepository repository;
+    private final ReplyRepository replyRepository;
 
     @Override
     public Long register(BoardDTO dto) {
@@ -35,6 +38,34 @@ public class BoardServiceImpl implements BoardService{
         Page<Object[]> result = repository.getBoardWithReplyCount(
                 pageRequestDTO.getPageable(Sort.by("bno").descending()));
         return new PageResultDTO<>(result, fn);
+    }
+
+    @Override
+    public BoardDTO get(Long bno) {
+        Object result = repository.getBoardByBno(bno);
+        Object[] arr = (Object[]) result;
+        return entityToDto((Board)arr[0], (Member)arr[1], (Long)arr[2]);
+
+    }
+
+    @Transactional
+    @Override
+    public void removeWithReplies(Long bno) {
+        replyRepository.deleteByBno(bno);
+        repository.deleteById(bno);
+
+    }
+
+    @Transactional
+    @Override
+    public void modify(BoardDTO boardDTO){
+        // getOne 의 경우엔 Proxy를 가져 옴으로 Transactional이 필요 하다.
+        Board board = repository.getOne(boardDTO.getBno());
+        if (board != null){
+            board.changeTitle(boardDTO.getTitle());
+            board.changCount(boardDTO.getContent());
+            repository.save(board);
+        }
     }
 
 }
