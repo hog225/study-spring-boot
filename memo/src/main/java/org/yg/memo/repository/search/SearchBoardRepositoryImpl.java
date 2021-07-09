@@ -2,11 +2,16 @@ package org.yg.memo.repository.search;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPQLQuery;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.yg.memo.entity.Board;
 import org.yg.memo.entity.QBoard;
@@ -14,6 +19,7 @@ import org.yg.memo.entity.QMember;
 import org.yg.memo.entity.QReply;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 //QuerydslRepositorySupport 는 Spring Data JPA에 포함된 클래스로 Querydsl 라이브러리를 이용해서 직접 무언가를 구현할때 사용
@@ -86,10 +92,30 @@ public class SearchBoardRepositoryImpl extends QuerydslRepositorySupport impleme
         }
 
         tuple.where(booleanBuilder);
+
+        //order by
+        Sort sort = pageable.getSort();
+
+        // order 는 bno.decending, title.ascending
+        sort.stream().forEach(order->{
+            Order direction = order.isAscending()? Order.ASC: Order.DESC;
+            String prop = order.getProperty();
+            log.info("prop " + prop);
+            PathBuilder orderByExpression = new PathBuilder(Board.class, "board");
+            tuple.orderBy(new OrderSpecifier(direction, orderByExpression.get(prop)));
+
+        });
         tuple.groupBy(board);
+
+        tuple.offset(pageable.getOffset());
+        tuple.limit(pageable.getPageSize());
         List<Tuple> result = tuple.fetch();
+
         log.info(result);
-        return null;
+
+        long count = tuple.fetchCount();
+        log.info("COUNT: " + count);
+        return new PageImpl<Object[]>(result.stream().map(t->t.toArray()).collect(Collectors.toList()), pageable, count);
 
 
 

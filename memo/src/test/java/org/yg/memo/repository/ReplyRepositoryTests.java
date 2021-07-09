@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.yg.memo.entity.Board;
 import org.yg.memo.entity.Reply;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -46,6 +47,15 @@ class ReplyRepositoryTests {
         System.out.println(reply); //board
         System.out.println(reply.getBoard()); // member
 
+    }
+
+    @Test
+    void readRepliesByBoard(){
+
+        Board board = Board.builder().bno(97L).build();
+
+        List<Reply> replyList = replyRepository.getRepliesByBoardOrderByRno(board);
+        replyList.forEach(reply -> System.out.println(reply));
     }
 
 }
