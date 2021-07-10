@@ -12,6 +12,7 @@ import org.yg.memo.entity.MovieImage;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
@@ -55,6 +56,27 @@ public class MovieRepositoryTests {
 
         for (Object[] objects: mPage){
             System.out.println(Arrays.toString(objects));
+        }
+    }
+
+    @Test
+    public void testListPage2(){
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "mno"));
+
+        Page<Object[]> mPage =  movieRepository.getListPageLastImage(pageRequest);
+
+        for (Object[] objects: mPage){
+            System.out.println(Arrays.toString(objects));
+        }
+    }
+
+    @Test
+    public void testGetMovieWithAll(){
+        List<Object[]> result = movieRepository.getMovieWithAll(293L);
+
+        System.out.println(result);
+        for (Object[] arr: result){
+            System.out.println(Arrays.toString(arr));
         }
     }
 }

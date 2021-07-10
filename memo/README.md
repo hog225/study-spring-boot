@@ -37,9 +37,19 @@ FETCH TYPE EAGER(Default) 의 경우 LEFT JOIN을 사용하여 results 에 Membe
     - 명사가 아닌 동사나 히스토리에 대한 데이터를 보관한다. 
     - 매핑 테이블은 중간에서 양쪽의 PK를 참조한다. 
 4. 영화(PK), 회원(PK), review(FK[영화, 회원], 매핑테이블 "평점을 준다.")
+5. revieRepositoryTests.java 참조  (N+1 문제 해결 )
 
 ##
 searchPage
+
+## fileUpload
+1. upload 방식 
+   - commons-fileupload 라이브러리를 사용
+   - Servlet 3버전부터 추가된 자체적인 파일 업로드 라이브러리를 사용 
+   
+2. Multipart
+   - 웹 클라이언트가 요청을 보낼 때, http 프로토콜의 바디 부분에 데이터를 여러 부분으로 나눠서 보내는 것.
+   - Spring 에서 이를 처리하도록 MultipartFile 인터페이스를 제공한다. 
 
 ## More
 1. Class diagram 그려보기 
