@@ -10,7 +10,11 @@ JPA, Tymeleaf
 1. <p>[[${dto}]]</p> = <p><span th:text="${dto}"></span></p>
 
 ### 접속 
-1. Blog http://localhost:8080/blog/
+1. Blog http://localhost:8080/blog/list
+2. Board http://localhost:8080/board/list
+3. http://localhost:8080/upload-test/uploadEx
+3. Movie http://localhost:8080/movie
+4. sample http://localhost:8080/sample/ex2
 
 ## JPA
 ### N:1 관계

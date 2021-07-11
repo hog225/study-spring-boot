@@ -62,7 +62,7 @@ public class SearchBoardRepositoryImpl extends QuerydslRepositorySupport impleme
         jpqlQuery.leftJoin(reply).on(reply.board.eq(board));
 
         // 여러 데이터를 얻어 올때는 Tuple을 이용
-        JPQLQuery<Tuple> tuple = jpqlQuery.select(board, member.email, reply.count());
+        JPQLQuery<Tuple> tuple = jpqlQuery.select(board, member, reply.count());
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         BooleanExpression expression = board.bno.gt(0L);

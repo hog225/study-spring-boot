@@ -36,7 +36,7 @@
         //실제 업로드 부분
         //upload ajax
         $.ajax({
-            url: '/movie/uploadAjax',
+            url: '/upload/uploadAjax',
             processData: false,
             contentType: false,
             data: formData,
@@ -64,7 +64,7 @@
 
         for(var i = 0; i < arr.length; i++){
             str += "<div>";
-            str += "<img src='/display?fileName="+arr[i].thumbnailURL+"'>";
+            str += "<img src='/upload/display?fileName="+arr[i].thumbnailURL+"'>";
             str += "<button class='removeBtn' data-name='"+arr[i].imageURL +"'>REMOVE</button>"
             str += "</div>";
         }
@@ -80,7 +80,7 @@
 
         console.log(fileName);
 
-        $.post('/removeFile', {fileName: fileName}, function(result){
+        $.post('/upload/removeFile', {fileName: fileName}, function(result){
             console.log(result);
             if(result === true){
                 targetDiv.remove();
