@@ -13,7 +13,7 @@ JPA, Tymeleaf
 1. Blog http://localhost:8080/blog/list
 2. Board http://localhost:8080/board/list
 3. http://localhost:8080/upload-test/uploadEx
-3. Movie http://localhost:8080/movie
+3. Movie http://localhost:8080/movie/list
 4. sample http://localhost:8080/sample/ex2
 
 ## JPA

@@ -72,5 +72,22 @@ public class SampleController {
   }
 
 
+  //Security
+  @GetMapping("/all")
+  public void exAll(){
+    log.info("security all allow...........");
+  }
+
+  @GetMapping("/member")
+  public void exMember(){
+    log.info("security Member allow...........");
+  }
+
+
+  @GetMapping("/admin")
+  public void exAdmin(){
+    log.info("security Admin allow...........");
+  }
+
 
 }
