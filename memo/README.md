@@ -15,6 +15,7 @@ JPA, Tymeleaf
 3. http://localhost:8080/upload-test/uploadEx
 3. Movie http://localhost:8080/movie/list
 4. sample http://localhost:8080/sample/ex2
+5. http://localhost:8080/sample/member
 
 ## JPA
 ### N:1 관계

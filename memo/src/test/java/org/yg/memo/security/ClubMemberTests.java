@@ -8,6 +8,7 @@ import org.yg.memo.entity.ClubMember;
 import org.yg.memo.entity.ClubMemberRole;
 import org.yg.memo.repository.ClubMemberRepository;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -36,5 +37,14 @@ public class ClubMemberTests {
             }
             clubMemberRepository.save(clubMember);
         });
+    }
+
+
+    @Test
+    public void testRead() {
+        Optional<ClubMember> result = clubMemberRepository.findByEmail("user93gmail.com", false);
+
+        ClubMember clubMember = result.get();
+        System.out.println(clubMember);
     }
 }

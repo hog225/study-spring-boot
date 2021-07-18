@@ -1,6 +1,8 @@
 package org.yg.memo.controller;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import java.util.stream.IntStream;
 import org.yg.memo.dto.*;
 import javax.servlet.*;
 import org.apache.catalina.connector.RequestFacade;
+import org.yg.memo.security.dto.ClubAuthMemberDTO;
 
 @Controller
 @RequestMapping("/sample")
@@ -73,20 +76,35 @@ public class SampleController {
 
 
   //Security
+  @PreAuthorize("permitAll()")
   @GetMapping("/all")
   public void exAll(){
     log.info("security all allow...........");
   }
 
+  //로그인 된 맴버 알아보기
   @GetMapping("/member")
-  public void exMember(){
+  @PreAuthorize("hasRole('USER')")
+  public void exMember(@AuthenticationPrincipal ClubAuthMemberDTO clubAuthMember){
     log.info("security Member allow...........");
+    log.info(clubAuthMember);
   }
 
 
+  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/admin")
   public void exAdmin(){
     log.info("security Admin allow...........");
+  }
+
+  //특정 사용자 에게만 접근 권한을 주고 싶을 경우
+  @PreAuthorize("#clubAuthMember != null && #clubAuthMember.username eq \"User15\"")
+  @GetMapping("/exOnly")
+  public String exMemberOnly(@AuthenticationPrincipal ClubAuthMemberDTO clubAuthMember){
+    log.info("exMember Only ....................");
+    log.info(clubAuthMember);
+
+    return "/sample/admin";
   }
 
 
