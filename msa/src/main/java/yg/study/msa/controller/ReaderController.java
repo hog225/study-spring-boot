@@ -24,7 +24,8 @@ public class ReaderController {
     private final WebBookPaymentService webBookPaymentService;
 
     @PostMapping("/")
-    public ResponseEntity<Long> registerReader(@RequestBody RegisterReaderForm registerReaderForm){
+    // RequestParam 일경우 ContentType이 무조건 application/json 이어야 한다.
+    public ResponseEntity<Long> registerReader(@RequestParam RegisterReaderForm registerReaderForm){
         return ResponseEntity.ok(ReaderService.registerReader(registerReaderForm));
     }
 

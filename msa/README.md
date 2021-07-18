@@ -31,3 +31,10 @@
     http://localhost:8080/swagger-ui.html
     http://localhost:8080/h2
 
+API 
+
+curl http://11.150.131.98:8080/reader/webBook
+curl --header "Content-Type: application/json" \
+    --request POST \
+    --data '{"name": "kim ki duck"}' \
+    http://11.150.131.98:8080/reader/
