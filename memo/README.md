@@ -10,12 +10,13 @@ JPA, Tymeleaf
 1. <p>[[${dto}]]</p> = <p><span th:text="${dto}"></span></p>
 
 ### 접속 
-1. Blog http://localhost:8080/blog/list
-2. Board http://localhost:8080/board/list
-3. http://localhost:8080/upload-test/uploadEx
-3. Movie http://localhost:8080/movie/list
+1. Blog http://localhost:8080/blog/list // JPA queryDSL
+2. Board http://localhost:8080/board/list // JPA JPQL
+3. http://localhost:8080/org.yg.memo-test/uploadEx //fileUpload
+3. Movie http://localhost:8080/movie/list // JPA manyToMany
 4. sample http://localhost:8080/sample/ex2
-5. http://localhost:8080/sample/member
+5. Club Member http://localhost:8080/sample/member //Spring Security FormLogin, OAuthLogin
+6. Note http://localhost:8080/notes/2 // Spring Security API Login
 
 ## JPA
 ### N:1 관계
@@ -43,6 +44,22 @@ FETCH TYPE EAGER(Default) 의 경우 LEFT JOIN을 사용하여 results 에 Membe
     - 매핑 테이블은 중간에서 양쪽의 PK를 참조한다. 
 4. 영화(PK), 회원(PK), review(FK[영화, 회원], 매핑테이블 "평점을 준다.")
 5. revieRepositoryTests.java 참조  (N+1 문제 해결 )
+#### 양방향 설계 
+> 양방향 설계가 어렵긴 하지만 연관관계를 잘 설계한다면 @Query를 최소화 하고 객체지향에 맞는 코드를 생산할 수 있다.
+
+양방향은 PK 입장에서 FK 의 Entity를 참조 
+
+@OneToMany를 PK 쪽 Entity에서 FK 를 가진 Entity를 참조하는데 이용함 OneToMany의 경우 @JoinTable등을 이용해 별도의 테이블을 지정하거나. 
+MappedBy 속성을 이용해 하위 엔티티 설정을 추가할 수 있다. MappedBy 속성을 이용하면 자기 자신은 연관관계의 주인이 아님을 DB에 알려줄 수 있다.
+
+- 양방향 설계의 장점 
+   - Pk 쪽 Entity 객체에 FK 쪽 Entity가 존재하도록 구성하고 이를 한번에 저장 할 수 있음 
+   - PK 쪽 Entity 삭제시 그 안에 속하는 FK 쪽 Entity도 삭제 가능 
+- 양방향 설계의 단점
+   - 트랜젝션이 일어난다. 
+   - FK 쪽 삭제시 PK 쪽 Entity에서 LIST 내용을 삭제하느 작업이 필요 하다. 
+
+
 
 ##
 searchPage

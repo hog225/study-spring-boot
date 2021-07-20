@@ -13,8 +13,13 @@ import org.springframework.security.config.authentication.AuthenticationManagerF
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.yg.memo.security.filter.ApiCheckFilter;
+import org.yg.memo.security.filter.ApiLoginFilter;
+import org.yg.memo.security.handler.ApiLoginFailHandler;
 import org.yg.memo.security.handler.ClubLoginSuccessHandler;
 import org.yg.memo.security.service.ClubUserDetailsService;
+import org.yg.memo.security.util.JWTUtil;
 
 @Configuration
 @Log4j2
@@ -28,6 +33,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public ApiLoginFilter apiLoginFilter() throws Exception{
+        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login", jwtUtil());
+        apiLoginFilter.setAuthenticationManager(authenticationManager());
+        apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());
+        return apiLoginFilter;
+    }
+
+    @Bean
+    public JWTUtil jwtUtil(){
+        return new JWTUtil();
+    }
+
+    //Configure 함수에서 따로 순서를 정해주지 않으면 가장 마지막에 수행된다.
+    @Bean
+    public ApiCheckFilter apiCheckFilter() {
+        return new ApiCheckFilter("/notes/**/*", jwtUtil());
+    }
+
+
 
     //인가
     @Override
@@ -47,6 +73,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.oauth2Login().successHandler(successHandler());
         // remember me 기능 FormLogin 만 가능
         http.rememberMe().tokenValiditySeconds(60*60*24*7).userDetailsService(userDetailsService);
+        // UsernamePasswordAuthenticationFilter 이전에 필터를 수행하라는 의미
+        http.addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(apiLoginFilter(), UsernamePasswordAuthenticationFilter.class);
 
 
     }
@@ -65,5 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .password("$2a$10$3vVhlTwYne0UfW6CCCtOiOJS5rcTDWP7a8ekGTT.9dgrTDgJVZVuy")
 //                .roles("USER");
 //    }
+
+
 
 }

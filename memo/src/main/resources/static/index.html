@@ -60,6 +60,7 @@
                         <code>#sidebarToggle</code>
                         ID which will toggle the menu when clicked.
                     </p>
+                    <button type="get note" class="getNotebtn btn-primary">Test get note </button>
                 </div>
             </div>
         </div>
@@ -70,4 +71,20 @@
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
     </body>
+    <script>
+        $(".getNotebtn").click(function(){
+            $.ajax({
+                beforeSend: function(request){
+                    request.setRequestHeader("Authorization", 'Bearer ' + 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjY3ODc1ODcsImV4cCI6MTYyOTM3OTU4Nywic3ViIjoidXNlcjE3Z21haWwuY29tIn0.83FjCFbKqk_Ykp7Um6uFUHtUNN7fL_-yA9TW9ZdM6qA');
+
+                },
+                dataType: "json",
+                url: 'http://localhost:8080/notes/all',
+                data: {email: 'user17gmail.com'},
+                success: function(arr){
+                    console.log(arr);
+                }
+            })
+        })
+    </script>
 </html>
