@@ -7,3 +7,18 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+
+  consumer1:
+    build: consumer
+    mem_limit: 350m
+
+  consumer2:
+    build: consumer
+    mem_limit: 350m
+
+
+  producer:
+    build: producer
+    mem_limit: 350m
+    ports:
+      - 8001:8001
