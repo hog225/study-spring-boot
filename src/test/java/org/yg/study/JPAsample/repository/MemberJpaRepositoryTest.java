@@ -10,6 +10,9 @@ import org.yg.study.JPAsample.entity.Member;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -20,6 +23,9 @@ class MemberJpaRepositoryTest {
     
     @Autowired
     MemberJpaRepository memberJpaRepository;
+    
+    @PersistenceContext
+    EntityManager em;
     
     @Test
     public void testMember(){
@@ -89,5 +95,37 @@ class MemberJpaRepositoryTest {
         //then
         assertThat(members.size()).isEqualTo(3);
         assertThat(totalCount).isEqualTo(5);
+    }
+
+    @Test
+    public void bulkUpdate(){
+        memberJpaRepository.save(new Member("member1", 10));
+        memberJpaRepository.save(new Member("member2", 19));
+        memberJpaRepository.save(new Member("member3", 20));
+        memberJpaRepository.save(new Member("member4", 21));
+        memberJpaRepository.save(new Member("member5", 40));
+
+        int resultCount = memberJpaRepository.bulkAgePluse(20);
+        assertThat(resultCount).isEqualTo(3);
+
+    }
+
+    @Test
+    public void JpaEventBaseEntity() throws Exception {
+      //given
+          Member member = new Member("member1");
+          memberJpaRepository.save(member); //@PrePersist
+          Thread.sleep(100);
+          member.setUsername("member2");
+          em.flush();
+          em.clear();
+
+      //when
+          Member findMember = memberJpaRepository.findById(member.getId()).get();
+      //then
+          System.out.println("findMember.createdDate = " +
+      findMember.getCreatedDate());
+          System.out.println("findMember.updatedDate = " +
+      findMember.getLastModifiedDate());
     }
 }
