@@ -32,7 +32,7 @@
 - jpa.properties.hibernate.dialect: org.hibernate.dialect.O.... 해당 DB에 맞게 Query가 나감 
 - Page 의 total count 쿼리는 고비용이다 그래서 실무 사용에서 주의 해야 한다. Page 인덱스는 0 부터 
 - Slice 는 Page 의 토탈카운트가 없다. 
-- Entity 는 절대 외부로 노출하지 않는다. DTO 로 변환해서 한다. 
+- Entity 는 절대 외부로 노출하지 않는다. DTO 로 변환해서 한다. DTO 내부에서도 Entity를 절대 그냥 써선 안된다. 
 - 벌크성 수정 쿼리 update 로 하는데 update 시 @Modifying(clearAutomatically = true) 을 이렇게 해서 영속성 컨텍스트를 클리어 해야 DB 와 동기를 맞출 수 있다. 
 - Fetch Join N:1 문제를 해결 "select m from Member m left join fetch m.team" 이런식으로 사용하며 이렇게 할 시 쿼리에 다른 테이블을 join 하여 날리고 테이블 데이터를 다 긁어 옴 한마디로 연관관계에 있는 테이블 데이터를 모조리 가져온다. 
   - EntityGragh 는 Fetch Join 을 JPQL 없이 깔끔하게 해결 해준다. 
@@ -42,3 +42,10 @@
 - Auditing 추적 => MappedSupperClass
 - MappedSuperClass - 속성만 내린다. 테이블 성격이 모두 다름으로 .. 성격에 따라 쪼개는게 필요 한다. 
 - Web 확장 memberController /members 참고
+- data.web.pagable.default-page-size 로 default page를 바꿀수 있다. 
+- 서비스 계층에서 트랜잭션을 시작하지 않으면 리파지토리에서 트랜젝션 시작 
+- @Transaction(readOnly = true) - Flush 를 하지 않는다. 즉 변경사항을 DB로 보내지 않는다. 
+- Entity에 GeneratedValue 가 없이 PK 를 직접 지정하여 Save 하면 em.merger 로 Save 가 동작한다. 이렇게 되면 조회 후 insert 함으로 성능에 손해다
+  - Entity에서 Persistable 을 구현하여 isNew 의 조건을 구현한다. 
+- Collection 을 Fetch Join 하면 Paging 이 안된다. 그리고 1: N Fetch Join 시 Paging과 비슷하게 setFistResult(1), setMaxResult(100) 이런식으로 사용하게 되면 모든 DB를 메모리에서 읽고 메모리에서 Paging 기능을 함으로 매우 위험하다.(OutOfMemory 발생 가능)
+추가로 2개 이상의 컬렉션(1:N:M => 1*N*M 개)에 대한 Fetch Join할 경우 문제 발생의 소지가 있으니 피해야 한다. 

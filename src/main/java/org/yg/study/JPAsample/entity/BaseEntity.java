@@ -21,10 +21,10 @@ public abstract class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime createdDate;
+    protected LocalDateTime createdDate;
 
     @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
+    protected LocalDateTime lastModifiedDate;
 
     //AuditAware Bean 에서 데이터 를 꺼내온다. 
     @CreatedBy
