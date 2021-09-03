@@ -9,6 +9,10 @@ https://docs.spring.io/spring-cloud-stream/docs/3.2.0-SNAPSHOT/reference/html/sp
 2. comsumer -amqp
 
 
+
+https://www.baeldung.com/spring-cloud-stream
+
+
 ## run
 1. docker-compose up - running on ubuntu/ lilocalhost
 2. run comsumer and producer
