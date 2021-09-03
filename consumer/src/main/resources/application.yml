@@ -14,3 +14,6 @@ mq:
   queue-name1: tasting.queue
   routing-key: buy.stuff.#
   routing-key1: eat.stuff.#
+
+# 이게 있어야지 Docker 에서 Rabbitmq 에 붙을 수 있다.
+spring.rabbitmq.host: rabbitmq
