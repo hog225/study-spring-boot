@@ -1,0 +1,27 @@
+server.port: 8004
+server.error.include-message: always
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: queue.log.messages # exchange
+          binder: local_rabbit
+        output:
+          destination: queue.pretty.log.messages #exchange
+          binder: local_rabbit
+        myOutput:
+          destination: queue.my.log.messages #exchange
+          binder: local_rabbit
+      binders:
+        local_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: 127.0.0.1
+                port: 5672
+                username: guest
+                password: guest
+                virtual-host: /
