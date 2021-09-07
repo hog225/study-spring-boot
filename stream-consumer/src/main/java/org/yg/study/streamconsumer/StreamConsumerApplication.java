@@ -15,16 +15,16 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.converter.MessageConverter;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.support.MessageBuilder;
-import org.yg.study.streamconsumer.channel.CustomProcessor;
+
 
 
 @SpringBootApplication
-@EnableBinding(CustomProcessor.class)
+//@EnableBinding(CustomProcessor.class)
 @Log4j2
 public class StreamConsumerApplication {
 
-	@Autowired
-	private CustomProcessor processor;
+//	@Autowired
+//	private CustomProcessor processor;
 
 	public static void main(String[] args) {
 		SpringApplication.run(StreamConsumerApplication.class, args);
@@ -45,28 +45,28 @@ public class StreamConsumerApplication {
 //			processor.anotherOutput().send(message(val));
 //		}
 //	}
-
-	private static final <T> Message<T> message(T val) {
-		return MessageBuilder.withPayload(val).build();
-	}
-
-
-	@StreamListener(
-			target = CustomProcessor.INPUT,
-			condition = "payload < 10")
-	public void routeValuesToAnOutput(Integer val) {
-		System.out.printf("routeValuesToAnOutput %d \n", val);
-		processor.anOutput().send(message(val));
-	}
-
-	@StreamListener(
-			target = CustomProcessor.INPUT,
-			condition = "payload >= 10")
-	public void routeValuesToAnotherOutput(Integer val) {
-		System.out.printf("routeValuesToAnotherOutput %d \n", val);
-
-		processor.anotherOutput().send(message(val));
-	}
+//
+//	private static final <T> Message<T> message(T val) {
+//		return MessageBuilder.withPayload(val).build();
+//	}
+//
+//
+//	@StreamListener(
+//			target = CustomProcessor.INPUT,
+//			condition = "payload < 10")
+//	public void routeValuesToAnOutput(Integer val) {
+//		System.out.printf("routeValuesToAnOutput %d \n", val);
+//		processor.anOutput().send(message(val));
+//	}
+//
+//	@StreamListener(
+//			target = CustomProcessor.INPUT,
+//			condition = "payload >= 10")
+//	public void routeValuesToAnotherOutput(Integer val) {
+//		System.out.printf("routeValuesToAnotherOutput %d \n", val);
+//
+//		processor.anotherOutput().send(message(val));
+//	}
 
 //	@Bean
 //	public MessageConverter providesTextPlainMessageConverter() {

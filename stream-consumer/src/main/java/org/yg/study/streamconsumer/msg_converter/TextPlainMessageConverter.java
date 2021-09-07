@@ -4,7 +4,7 @@ import org.springframework.core.log.LogMessage;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.converter.AbstractMessageConverter;
 import org.springframework.util.MimeType;
-
+// DO NOTHING
 public class TextPlainMessageConverter  extends AbstractMessageConverter {
 
     public TextPlainMessageConverter() {
