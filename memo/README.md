@@ -1,19 +1,19 @@
 # Memo
 
-JPA, Tymeleaf
+JPA, Tymeleaf, Spring Security
 - from 코드로 배우는 스프링 부트 웹프로젝트 (구멍가게 코딩단)
 - https://github.com/rachel-kwak/springboot
  
 
 
-### Thymeleaf
-1. <p>[[${dto}]]</p> = <p><span th:text="${dto}"></span></p>
+## Thymeleaf
+...
 
-### 접속 
+## Test 
 1. Blog http://localhost:8080/blog/list // JPA queryDSL
 2. Board http://localhost:8080/board/list // JPA JPQL
 3. http://localhost:8080/org.yg.memo-test/uploadEx //fileUpload
-3. Movie http://localhost:8080/movie/list // JPA manyToMany
+3. Movie http://localhost:8080/movie/list // JPA 양방향
 4. sample http://localhost:8080/sample/ex2
 5. Club Member http://localhost:8080/sample/member //Spring Security FormLogin, OAuthLogin
 6. Note http://localhost:8080/notes/2 // Spring Security API Login
@@ -24,10 +24,12 @@ JPA, Tymeleaf
 2. PK를 기준으로 잡고 데이터를 모델링 예) 회원 - PK 게시글 - FK(회원의 PK)
 3. 해석은 FK 에서 예) 게시글 과 회원은 N:1 관계
 4. FK 를 가진 Entity 가 PK를 가진 Entity를 참조 하는게 하는게 DB 모델링과 동일한 구조가 되기 때문에 이런 방식으로 한다.
-```
-member <--- board
-```
-5. N+1 문제 한번의 쿼리로 N개의 데이터를 가져 왔는데 N개의 데이터를 처리하기 위해서 필요한 추가적인 쿼리가 각 N개에 대해서 수행되는 상황 
+    ```
+    member <--- board
+    ```
+5. N+1 문제 
+    > 한번의 쿼리로 N개의 데이터를 가져 왔는데 N개의 데이터를 처리하기 위해서 필요한 추가적인 쿼리가 각 N개에 대해서 수행되는 상황
+
 ### EAGER 와 LAZY
 FETCH TYPE EAGER(Default) 의 경우 LEFT JOIN을 사용하여 results 에 Member, Board 모두 로드 된다. LAZY 의 경우엔 우선 Board 만 조회 한다. 그리고 Transactional 애노테이션(속성에 따라)의 도옴을 통해 getWriter가 호출 될 때 Member를 조회한다.
 
@@ -59,11 +61,7 @@ MappedBy 속성을 이용해 하위 엔티티 설정을 추가할 수 있다. Ma
    - 트랜젝션이 일어난다. 
    - FK 쪽 삭제시 PK 쪽 Entity에서 LIST 내용을 삭제하느 작업이 필요 하다. 
 
-
-
-##
-searchPage
-
+    
 ## fileUpload
 1. upload 방식 
    - commons-fileupload 라이브러리를 사용
@@ -73,5 +71,5 @@ searchPage
    - 웹 클라이언트가 요청을 보낼 때, http 프로토콜의 바디 부분에 데이터를 여러 부분으로 나눠서 보내는 것.
    - Spring 에서 이를 처리하도록 MultipartFile 인터페이스를 제공한다. 
 
-## More
+## ToDo
 1. Class diagram 그려보기 
