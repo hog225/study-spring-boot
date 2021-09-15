@@ -6,10 +6,18 @@
 
 
 ## gradle 
-- gradlew.bat dependencies --configuration compileClasspath - 의존 관계확인 
+- gradlew.bat dependencies --configuration compileClasspath - 의존 관계확인 가능 
 
 
 ## JPA
+- 영속 상태 변화
+  
+  ![persistence-context](./img/jpa-persistence-context.jpg)
+  - new/transient: 영속성 컨텍스트와 상관없는 새로운 상태
+  - managed: 연속성 컨텍스트에 관리되는 상태
+  - detached: 영속성 컨텍스트에 저장되었다가 분리된 상태 
+  - removed: 삭제된 상태 
+  - persist, remove, .. 등은 entityManager에서 호출 가능하고 영속성 상태를 변경하는 역할을 한다. 추가적으로 Trascation이 Commit 되면 Managed 에 있는 쿼리가 DB로 날라간다.
 - JPA vs Spring Data JPA
     - JPA: Entity Manager를 User 가 Control 해야 한다. 
     - Spring Data JPA: Spring 이 알아서 Entity Manager를 이용해 CRUD Paging 등 구현 한다.
@@ -22,11 +30,13 @@
 - Named Query : Entity 에 Query 이름과 JPQL을 지정하여 Query 이름으로 쿼리를 할수 있다(JPA 의 경우) 거의 안씀.. NamedQuery를 쓰면 프로그램 로딩시에 SQL 을 파싱함으로 SQL 문에 오타가 있는지 알 수 있다. 
   Repository 에 @Query 에 SQL 문을 쓰는 경우도 마찬가지로 로딩시 SQL 문 오타를 잡을 수 있음  
 - JPQL
-  - = :[Parameter Name 이름기반] "select m from Member m where m.username =: username"
-  - = ?[Parameter Order 위치기반] "select m from Member m where m.username =? 1"
-  - DTO 로 반환시 "select new org.yg.study.JPAsample.dto.MemberDto(m.id, m.username, t.name) from Member m join Team t".
+  ```
+  :[Parameter Name 이름기반] "select m from Member m where m.username = :username"
+  ?[Parameter Order 위치기반] "select m from Member m where m.username = ?1"
+  DTO 로 반환시 "select new org.yg.study.JPAsample.dto.MemberDto(m.id, m.username, t.name) from Member m join Team t".
   or List<Object[]> 형식으로 ...
-- QueryDSL **** 중요 !! 실무에서는 이게 가장 깔끔하다고함 
+  QueryDSL **** 중요 !! 실무에서는 이게 가장 깔끔하다고함
+  ``` 
 - 반환데이터가 없을지 있을지 모를땐  Optional(orElse, orElseGet) 을 사용하자 
 - [Spring data JPA 지원하는 Retrun Type](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repository-query-return-types)
 - jpa.properties.hibernate.dialect: org.hibernate.dialect.O.... 해당 DB에 맞게 Query가 나감 
@@ -48,4 +58,27 @@
 - Entity에 GeneratedValue 가 없이 PK 를 직접 지정하여 Save 하면 em.merger 로 Save 가 동작한다. 이렇게 되면 조회 후 insert 함으로 성능에 손해다
   - Entity에서 Persistable 을 구현하여 isNew 의 조건을 구현한다. 
 - Collection 을 Fetch Join 하면 Paging 이 안된다. 그리고 1: N Fetch Join 시 Paging과 비슷하게 setFistResult(1), setMaxResult(100) 이런식으로 사용하게 되면 모든 DB를 메모리에서 읽고 메모리에서 Paging 기능을 함으로 매우 위험하다.(OutOfMemory 발생 가능)
-추가로 2개 이상의 컬렉션(1:N:M => 1*N*M 개)에 대한 Fetch Join할 경우 문제 발생의 소지가 있으니 피해야 한다. 
+추가로 2개 이상의 컬렉션(1:N:M => 1*N*M 개)에 대한 Fetch Join할 경우 문제 발생의 소지가 있으니 피해야 한다.
+  - Fetch Join 을 많이 하게 되면 Application으로 보내지는 데이터(중복데이터) 가 많아질수 있다. 
+- 컬렉션 패치 조인시 Paging을 사용하는 방법 
+  1. ToOne(OneToOne, ManyToOne) 관계를 모두 패치 조인 한다. (ToOne 관계는 row 를 증가 시키지 않음으로)
+  2. 컬랙션은(ToMany) 지연 로딩한다.
+  3. 지연 로팅 성능 최적화를 위해 "hibernate.default_batch_fetch_size", "@BatchSize" 를 적용한다.
+    - hibernate.default_batch_fetch_size 를 적용하면 size 만큼 In 절을 써서 한번에 땡겨온다. Global
+    - Specific 하게 할때는 @BatchSize 를 이용 
+- 엔티티 조회하는 방식을 채용하면 코드 복잡도를 줄이고 성능 최적화를 할 수 있다. 
+- Open Session In View(OSIV): 하이버네이트 
+  - open-in-view defualt true 인데 이 경우 Transaction 이 수행될때 DB Connection을 획득(영속성 Context 유지)하고 Response가 나갈때까지 Connection을 들고 있다.
+    - 장점: Controller, View 단에서 지연로딩을 사용할 수 있다.
+    - 단점: Connection Resource 가 말라버릴 수 있다. 
+  - false 인 경우엔 Service 단에서 Transaction 이 끝나면 영속성 Context를 날린다.
+    - 장점: Connection Resource 를 절약 가능 
+    - 단점: 만약 지연로딩을 Controller에서 했다면 장애가 발생한다. (Controller에서 지연로딩이 안되기 때문에 ) Service 단에서 데이터를 모두 조회해 놔야 한다.
+  - 트레픽이 많은 서비스의 경우는 OSIV를 꺼는게 좋다. 
+  - ADMIN 시스템의 경우는 OSIV를 켜서 코딩을 좀더 쉽게 하는게 좋다. 
+### 참조 
+- https://lifeonroom.com/study-lab/spring-boot-jpa-1/
+- https://lifeonroom.com/study-lab/spring-boot-jpa-2/
+- https://lifeonroom.com/study-lab/spring-boot-jpa-3/
+- https://github.com/hog225/study-spring-boot/blob/master/memo/README.md // 코드도 같이 참조 .. 
+  
