@@ -22,3 +22,6 @@
 3. http://localhost:8001/test/queue/pub-string-simple-message-queue
 3. http://localhost:8003/index/1
 3. http://localhost:8003/index1/2
+
+## More
+- 3.1 부터 @EnableBinding, @StreamLinstener 가 Deprecated 되었다...
