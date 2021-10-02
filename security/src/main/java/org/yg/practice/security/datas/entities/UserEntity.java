@@ -8,15 +8,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @EqualsAndHashCode(callSuper = false)
 @Getter
-@Table(name = "users", schema = "security")
+// mariaDB
+//@Table(name = "users", schema = "security")
+@Table(name="users")
 @Entity
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,6 +23,7 @@ public class UserEntity implements Serializable {
 
     @Id
     @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(length = 50)

@@ -2,6 +2,7 @@ package org.yg.practice.security.configures.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;
@@ -26,6 +27,11 @@ public class SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         customUserDetails.setPassword(null);
         httpSession.setAttribute("userInfo", customUserDetails);
+
+        authentication.getAuthorities().stream().forEach(grantedAuthority -> {
+                log.info("grantedAuthority" + grantedAuthority.getAuthority());
+        });
+
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }
