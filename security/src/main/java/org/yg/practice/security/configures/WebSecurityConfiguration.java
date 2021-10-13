@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.yg.practice.security.configures.filter.CustomAuthenticationFilter;
 import org.yg.practice.security.configures.filter.CustomUsernamePasswordAuthenticationFilter;
 import org.yg.practice.security.configures.filter.PreUsernamePasswordAuthenticationFilter;
 import org.yg.practice.security.configures.provider.CustomDaoAuthenticationProvider;
@@ -72,26 +73,36 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
             .antMatchers("/images/**");
 
     }
+
+// Login
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         log.info("configure Filter ");
-        // UsernamePasswordAuthenticationFilter 앞에 PreUsernamePasswordAuthenticationFilter 를 넣어서 필터를 수행 하라 
+        // UsernamePasswordAuthenticationFilter 앞에 PreUsernamePasswordAuthenticationFilter 를 넣어서 필터를 수행 하라
         http.addFilterBefore(new PreUsernamePasswordAuthenticationFilter(bCryptPasswordEncoder(), userService, mfaService), UsernamePasswordAuthenticationFilter.class);
-        // UsernamePasswordAuthenticationFilter 단계에서 CustomUsernamePasswordAuthenticationFilter 가 호출된다. 
+        // UsernamePasswordAuthenticationFilter 단계에서 CustomUsernamePasswordAuthenticationFilter 가 호출된다.
         http.addFilterAt(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        //.addFilterAfter(customAuthenticationFilter(), CustomUsernamePasswordAuthenticationFilter.class);
+
         http.authenticationProvider(customDaoAuthenticationProvider());
         http.cors()
-            .and().headers().frameOptions().sameOrigin() // url 의 도메인 보는 
+            .and().headers().frameOptions().sameOrigin() // url 의 도메인 보는
             //.csrf().disable();
-        
+
             // 인증하지 않아도 접근할 수 있는 URL
             .and().authorizeRequests().antMatchers(permitalURL.split(",")).permitAll()
             .and().formLogin().loginPage("/login").successHandler(new SuccessHandler()).failureHandler(new FailureHandler()) // get 이 오면 화면 post가 오면 filter 가 캐치
             .and().logout().logoutUrl("/logout").logoutSuccessHandler(new LogoutSucceedHandler()).invalidateHttpSession(false).permitAll()
-            .and().authorizeRequests().anyRequest().authenticated();//위의 Request 가 아닌 모든 Request는 인증이 필요하다. 
+            .and().authorizeRequests().anyRequest().authenticated();//위의 Request 가 아닌 모든 Request는 인증이 필요하다.
         // super.configure(http);
-        http.csrf().disable(); // 이것 때문에 한 한 두시간 날림 
-        // 등록된 Confiruration이 안맞으면 /error를 Filter쪽으로 주는데 처리를 안해서 인지 원인 알기가 어려웠음 
+        http.csrf().disable(); // 이것 때문에 한 한 두시간 날림
+        // 등록된 Confiruration이 안맞으면 /error를 Filter쪽으로 주는데 처리를 안해서 인지 원인 알기가 어려웠음
+    }
+
+
+    private CustomAuthenticationFilter customAuthenticationFilter() throws Exception{
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
+        return customAuthenticationFilter;
     }
 
     private CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter() throws Exception{
