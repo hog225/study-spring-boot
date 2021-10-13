@@ -4,20 +4,33 @@ server:
     context-path: /
 
 spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  #  datasource:
+  #    driver-class-name: org.mariadb.jdbc.Driver
+  #    url: jdbc:mysql://localhost:3306/security?characterEncoding=UTF-8&serverTimezone=UTC
+  #    username: root
+  #    password: root
+  datasource:
+    username: sa
+    password:
+    hikari:
+      jdbc-url: jdbc:h2:~/test
   application:
     name: mfa
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
     show-sql: true
     generate-ddl: false
     properties:
       hibernate:
         show_sql: true
         format_sql: true
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/security?characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
-    password: root
+
   thymeleaf:
     cache: false
     encoding: UTF-8

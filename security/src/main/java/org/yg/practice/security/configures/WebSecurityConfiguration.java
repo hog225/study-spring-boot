@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.yg.practice.security.configures.filter.CustomAuthenticationFilter;
 import org.yg.practice.security.configures.filter.CustomUsernamePasswordAuthenticationFilter;
 import org.yg.practice.security.configures.filter.PreUsernamePasswordAuthenticationFilter;
+import org.yg.practice.security.configures.handler.CustomAccessDeniedHandler;
 import org.yg.practice.security.configures.provider.CustomDaoAuthenticationProvider;
 import org.yg.practice.security.configures.handler.FailureHandler;
 import org.yg.practice.security.configures.handler.LogoutSucceedHandler;
@@ -34,7 +35,7 @@ import org.yg.practice.security.services.MfaService;
 // 만약 메인 Package 외부에 Entity가 있다면 아래 애노테이션을 써서 Bean으로 등록 해줘야 함 
 //@EntityScan(basePackage = {"org.yg.practice.security"}, basePackageClassed = {Jsr310Converters.class})
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
-    private String permitalURL = "/login,/,/mfactor,/purelogin,/prelogin";
+    private String permitalURL = "/login,/,/mfactor,/purelogin,/prelogin,/h2/**";
     private final CustomUserDetailsService customUserDetailsService;
     private final UserService userService; 
     private final MfaService mfaService;
@@ -77,7 +78,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 // Login
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         log.info("configure Filter ");
+        http.exceptionHandling()
+                .accessDeniedHandler(new CustomAccessDeniedHandler());
         // UsernamePasswordAuthenticationFilter 앞에 PreUsernamePasswordAuthenticationFilter 를 넣어서 필터를 수행 하라
         http.addFilterBefore(new PreUsernamePasswordAuthenticationFilter(bCryptPasswordEncoder(), userService, mfaService), UsernamePasswordAuthenticationFilter.class);
         // UsernamePasswordAuthenticationFilter 단계에서 CustomUsernamePasswordAuthenticationFilter 가 호출된다.
@@ -90,7 +94,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
             //.csrf().disable();
 
             // 인증하지 않아도 접근할 수 있는 URL
-            .and().authorizeRequests().antMatchers(permitalURL.split(",")).permitAll()
+            .and().authorizeRequests()
+                .antMatchers(permitalURL.split(","))
+                .permitAll()
             .and().formLogin().loginPage("/login").successHandler(new SuccessHandler()).failureHandler(new FailureHandler()) // get 이 오면 화면 post가 오면 filter 가 캐치
             .and().logout().logoutUrl("/logout").logoutSuccessHandler(new LogoutSucceedHandler()).invalidateHttpSession(false).permitAll()
             .and().authorizeRequests().anyRequest().authenticated();//위의 Request 가 아닌 모든 Request는 인증이 필요하다.

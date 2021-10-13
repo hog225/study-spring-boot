@@ -19,7 +19,9 @@ import java.io.Serializable;
 
 @EqualsAndHashCode(callSuper = false)
 @Getter
-@Table(name = "mfa", schema = "security")
+// mariaDB
+//@Table(name = "mfa", schema = "security")
+@Table(name = "mfa")
 @Entity
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
