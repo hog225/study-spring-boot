@@ -17,6 +17,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        use_sql_comments: true
 
   data:
     web:
@@ -27,5 +28,5 @@ spring:
 logging:
   level:
     org.hibernate.SQL: debug
-    # org.hibernate.type: trace # 파라미터를 같이 보여줌
+    #org.hibernate.type: trace # 파라미터를 같이 보여줌
 

@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -21,9 +23,11 @@ public abstract class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
+    @JsonProperty(value = "createdDate", access = JsonProperty.Access.READ_ONLY)
     protected LocalDateTime createdDate;
 
     @LastModifiedDate
+    @JsonProperty(value = "lastModifiedDate", access = JsonProperty.Access.READ_ONLY)
     protected LocalDateTime lastModifiedDate;
 
     //AuditAware Bean 에서 데이터 를 꺼내온다. 

@@ -1,5 +1,6 @@
 package org.yg.study.JPAsample.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Team extends BaseEntity{
     private String name;
 
     @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Member> members = new ArrayList<>();
 
     public Team(String name) {
