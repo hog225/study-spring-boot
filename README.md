@@ -76,11 +76,14 @@
     - 단점: 만약 지연로딩을 Controller에서 했다면 장애가 발생한다. (Controller에서 지연로딩이 안되기 때문에 ) Service 단에서 데이터를 모두 조회해 놔야 한다.
   - 트레픽이 많은 서비스의 경우는 OSIV를 꺼는게 좋다. 
   - ADMIN 시스템의 경우는 OSIV를 켜서 코딩을 좀더 쉽게 하는게 좋다. 
-
+- JPQL 서브쿼리는 from 절의 sub 쿼리는 지원하지 않는다. 사실 select 절의 subquery 도 않되나 이는 하이버네이트가 지원해줌 
+  - 서브쿼리는 높은 확률로 join으로 변경 가능하다. 
+  - 쿼리 두번 실행 
+  - native sql 
 ### Query DSL 
 - QueryDslTest 참조 
 - https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/lecture/30125?tab=curriculum
-- 집합 ! 처음부터 보기 
+- Join on 부터  
 
 ### 참조 
 - https://lifeonroom.com/study-lab/spring-boot-jpa-1/
