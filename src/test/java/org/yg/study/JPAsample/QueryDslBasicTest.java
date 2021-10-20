@@ -3,10 +3,13 @@ package org.yg.study.JPAsample;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.NonUniqueResultException;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
@@ -18,6 +21,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.yg.study.JPAsample.dto.MemberDto;
+import org.yg.study.JPAsample.dto.QUserDto;
+import org.yg.study.JPAsample.dto.UserDto;
 import org.yg.study.JPAsample.entity.*;
 
 import javax.persistence.EntityManager;
@@ -28,6 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.springframework.core.annotation.MergedAnnotations.from;
 import static org.yg.study.JPAsample.entity.QMember.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -448,5 +455,165 @@ public class QueryDslBasicTest {
                 .where(member.username.eq("member1"))
                 .fetch();
     }
+
+    @Test
+    public void booleanBuilderTest() {
+        System.out.println("B~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        List<String> strs = Arrays.asList("asdfg", "werg", "member3");
+        for(String name : strs){
+            booleanBuilder.or(member.username.equalsIgnoreCase(name));
+        }
+    }
+
+    @Test
+    //tuPLE 은 REPOSITORY 에서만 쓰는게 좋다 다른 레이어랑 경계를 구분짖기 위해
+    public void tupleProjection() {
+        List<Tuple> result = jpaQueryFactory
+                .select(member.username, member.age)
+                .from(member)
+                .fetch();
+
+        for (Tuple tuple : result) {
+            String username = tuple.get(member.username);
+            Integer age = tuple.get(member.age);
+            System.out.println(username);
+        }
+    }
+
+    // 프로퍼티 세팅 방법 // setter 가 있어야 함 프로퍼티 명이 맞아야함
+    // dto 가져 오기
+    @Test
+    public void findDtoBySetter() {
+        List<MemberDto> fetch = jpaQueryFactory
+                .select(Projections.bean(MemberDto.class,
+                        member.id,
+                        member.username,
+                        member.age))
+                .from(member)
+                .fetch();
+
+        for (MemberDto memberDto : fetch){
+            System.out.println(memberDto);
+            assertThat(memberDto).isInstanceOf(MemberDto.class);
+        }
+
+    }
+    // dto 가져 오기
+    // 필드명이 맞아야 함
+    @Test
+    public void findDtoByField() {
+        List<MemberDto> fetch = jpaQueryFactory
+                .select(Projections.fields(MemberDto.class,
+                        member.id,
+                        member.username,
+                        member.team.name))
+                .from(member)
+                .fetch();
+
+        for (MemberDto memberDto : fetch){
+            System.out.println(memberDto);
+            assertThat(memberDto).isInstanceOf(MemberDto.class);
+        }
+
+    }
+
+    @Test
+    public void findDtoByConstructor() {
+        List<MemberDto> fetch = jpaQueryFactory
+                .select(Projections.constructor(MemberDto.class,
+                        member.id,
+                        member.username,
+                        member.team.name))
+                .from(member)
+                .fetch();
+
+        for (MemberDto memberDto : fetch){
+            System.out.println(memberDto);
+            assertThat(memberDto).isInstanceOf(MemberDto.class);
+        }
+
+    }
+
+    @Test
+    public void fetchJoin2(){
+        em.flush();
+        em.clear();
+
+        List<Member> findMember = jpaQueryFactory
+                .select(member)
+                .from(member)
+                .join(member.team, team).fetchJoin()
+                .fetch();
+
+        findMember.stream().forEach(a -> {
+            System.out.println(a);
+        });
+
+    }
+
+    @Test
+    // ExpressionUtils field 이름을 맞춰줄 수 이싿.
+    public void findUserDtoByField(){
+        QMember qMember = new QMember("memberSub");
+        List<UserDto> userDtos = jpaQueryFactory
+                .select(Projections.fields(UserDto.class,
+                        member.username.as("name"),
+                        ExpressionUtils.as(JPAExpressions
+                        .select(member.age.max()).from(qMember), "age")
+                ))
+                .from(member)
+                .fetch();
+
+        for (UserDto userDto1 : userDtos){
+            System.out.println(userDto1);
+        }
+
+    }
+
+    @Test
+    public void findDtoByQueryProjection(){
+        List<UserDto> userDtos = jpaQueryFactory
+                .select(new QUserDto(member.username, member.age)).from(member)
+                .fetch();
+
+        userDtos.forEach(System.out::println);
+    }
+
+    @Test
+    public void 동적쿼리_BooleanBuilder(){
+        String usernameParam = "member1";
+        Integer ageParam = 10;
+
+        List<Member> result = searchMember1(usernameParam, ageParam);
+        assertThat(result.size()).isEqualTo(1);
+
+    }
+
+    private List<Member> searchMember1(String username, Integer age){
+        BooleanBuilder builder = new BooleanBuilder(/*member.username.eq(username)*/);
+        if (username != null){
+            builder.and(member.username.eq(username));
+        }
+
+        if (age != null){
+            builder.and(member.age.eq(age));
+        }
+
+            /* 모두 null 이 아니면 select
+        member1
+    from
+        Member member1
+    where
+        member1.username = ?1
+        and member1.age = ?2 */
+        return jpaQueryFactory
+                .select(member)
+                .from(member)
+                .where(builder)
+                .fetch();
+    }
+
+
 
 }
