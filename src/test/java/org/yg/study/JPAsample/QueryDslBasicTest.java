@@ -2,20 +2,19 @@ package org.yg.study.JPAsample;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Lists;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.NonUniqueResultException;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,7 @@ import javax.persistence.PersistenceUnit;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.springframework.core.annotation.MergedAnnotations.from;
@@ -614,6 +614,40 @@ public class QueryDslBasicTest {
                 .fetch();
     }
 
+    //Where 다중 파라미터
+    @Test
+    public void 동적쿼리_WhereParam(){
+        String usernameParam = "member1";
+        Integer ageParam = 10;
+
+        List<Member> result = searchMember1(usernameParam, ageParam);
+        assertThat(result.size()).isEqualTo(1);
+    }
+
+
+    private List<Member> searchMember2(String username, Integer age){
+        return jpaQueryFactory
+                .select(member)
+                .from(member)
+                // where 의 null 은 무시되고 , 조건 나열은 And
+                .where(usernameEq(username), ageEq(age))
+                .fetch();
+    }
+
+    private BooleanExpression ageEq(Integer age) {
+        Optional<Integer> oage = Optional.ofNullable(age);
+        return oage.isPresent() ? member.age.eq(age): null;
+
+    }
+
+    private BooleanExpression usernameEq(String username) {
+        return username !=null ? member.username.eq(username): null;
+    }
+
+    // 요걸 다른 쿼리에서 재활용 가능
+    private BooleanExpression condition(String username, Integer age) {
+        return usernameEq(username).and(ageEq(age));
+    }
 
 
 }

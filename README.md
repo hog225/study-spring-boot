@@ -83,7 +83,7 @@
 ### Query DSL 
 - QueryDslTest 참조 
 - https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/lecture/30125?tab=curriculum
-- 동적 쿼리 where 다중 선택 
+- 수정 상태와 벌크 연산 
 
 ### 참조 
 - https://lifeonroom.com/study-lab/spring-boot-jpa-1/
