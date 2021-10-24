@@ -19,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 import org.yg.study.JPAsample.dto.MemberDto;
 import org.yg.study.JPAsample.dto.QUserDto;
@@ -647,6 +648,58 @@ public class QueryDslBasicTest {
     // 요걸 다른 쿼리에서 재활용 가능
     private BooleanExpression condition(String username, Integer age) {
         return usernameEq(username).and(ageEq(age));
+    }
+
+
+    //
+    @Test
+    @Commit
+    public void bulkUpdate(){
+        jpaQueryFactory
+                .update(member)
+                .set(member.username, "비회원")
+                .where(member.age.lt(28))
+                .execute();
+
+        // 영속성 컨텍스틑 항상 우선권을 가진다.
+        // 여기서 member는 영속성 컨택스크고 update 는 영속성 컨택스트를 안친다.
+        // 그럼으로 member를 조회하면 변경된 값이 들어가 있지 않다.
+        // 그럼으로 아래처럼 영속성 컨택스트 를 초기화 시킨다.
+        em.flush();
+        em.clear();
+    }
+
+    @Test
+    // 모든 맴버의 나이를 일씩추가
+    public void bulkAdd() {
+        long count = jpaQueryFactory
+                .update(member)
+                .set(member.age, member.age.add(1))
+                .execute();
+    }
+
+    @Test
+    public void bulkDelete() {
+        long count = jpaQueryFactory
+                .delete(member)
+                .where(member.age.gt(49))
+                .execute();
+    }
+
+    @Test
+    public void sqlFunction(){
+        //h2 의 경우 Hibernate h2direct 에 등록이 되어 있어야 한다.
+        List<String> results = jpaQueryFactory
+                .select(
+                        Expressions.stringTemplate("function('replace', {0}, {1}, {2})", member.username, "member", "M")
+                ).from(member)
+                .fetch();
+
+        for (String s: results) {
+
+            System.out.println(s);
+        }
+
     }
 
 

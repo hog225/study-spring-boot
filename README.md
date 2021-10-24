@@ -83,7 +83,10 @@
 ### Query DSL 
 - QueryDslTest 참조 
 - https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/lecture/30125?tab=curriculum
-- 수정 상태와 벌크 연산 
+- 스프링 데이터 페이지 활용 3 컨트롤러 개발  
+- Custom Reposiotry
+![img.png](img/img.png)
+
 
 ### 참조 
 - https://lifeonroom.com/study-lab/spring-boot-jpa-1/
