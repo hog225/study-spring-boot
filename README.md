@@ -82,8 +82,7 @@
   - native sql 
 ### Query DSL 
 - QueryDslTest 참조 
-- https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/lecture/30125?tab=curriculum
-- 스프링 데이터 페이지 활용 3 컨트롤러 개발  
+- https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/lecture/30125?tab=curriculum 
 - Custom Reposiotry
 ![img.png](img/img.png)
 
