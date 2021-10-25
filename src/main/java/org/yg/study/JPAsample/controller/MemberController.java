@@ -1,5 +1,6 @@
 package org.yg.study.JPAsample.controller;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +11,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.yg.study.JPAsample.dto.MemberSearchCondition;
+import org.yg.study.JPAsample.dto.MemberTeamDto;
 import org.yg.study.JPAsample.entity.Member;
 import org.yg.study.JPAsample.repository.MemberRepository;
 
@@ -42,6 +45,15 @@ public class MemberController {
     public Page<Member>list(@PageableDefault(size = 5) Pageable pageable){
         return memberRepository.findAll(pageable);
     }
+
+    // condition 이 자동으로 들어감
+    //http://localhost:8080/v2/members?teamName=teamB
+    //http://localhost:8080/v2/members?teamName=teamB&username=member81
+    @GetMapping("/v2/members")
+    public List<MemberTeamDto> searchMemberv1(MemberSearchCondition cond){
+        return memberRepository.search(cond);
+    }
+
 
 
     @PostConstruct

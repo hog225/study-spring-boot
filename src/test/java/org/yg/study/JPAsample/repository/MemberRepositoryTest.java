@@ -16,6 +16,7 @@ import org.yg.study.JPAsample.dto.MemberDto;
 import org.yg.study.JPAsample.dto.MemberSearchCondition;
 import org.yg.study.JPAsample.dto.MemberTeamDto;
 import org.yg.study.JPAsample.entity.Member;
+import org.yg.study.JPAsample.entity.QMember;
 import org.yg.study.JPAsample.entity.Team;
 
 import java.util.ArrayList;
@@ -345,6 +346,19 @@ class MemberRepositoryTest {
 
         System.out.println(memberTeamDtos.getSize());
         System.out.println(memberTeamDtos.getContent());
+    }
+
+    @Test
+    //Repository 에서 QuerydslPredicateExecutor 를 상속해야 한다.
+
+    public void queryDslPredicateExcutor(){
+        QMember member = QMember.member;
+        // leftJoin 이 안된다.
+        // Service 나 Controller 에서 QueryDsl predicator를 만들어야 함으로 로직과 Repository 간에 의존관계가 생긴다.
+        Iterable<Member> member1 = memberRepository.findAll(member.age.between(0, 40).and(member.username.eq("member1")));
+        for(Member member1s: member1){
+            System.out.println(member1s);
+        }
     }
 
 }
