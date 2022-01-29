@@ -26,12 +26,12 @@ public class HelloJobConfiguration {
 
     @Bean
     public Job helloJob(){
-        return jobBuilderFactory.get("helloJob")
+        return jobBuilderFactory.get("helloJob1")
                 .start(helloStep1())
                 .next(helloStep2())
                 .next(helloStep3())
                 .incrementer(new RunIdIncrementer())
-                .validator(new ValidationConfiguration())
+                //.validator(new ValidationConfiguration())
                 .preventRestart()
                 .build();
     }
@@ -39,13 +39,8 @@ public class HelloJobConfiguration {
     @Bean
     public Step helloStep1(){
         return stepBuilderFactory.get("step1")
-                .tasklet(new Tasklet() {
-                    @Override
-                    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-                        System.out.println(" >> Hello Spring batch step 1");
-                        return RepeatStatus.FINISHED; // 한번만 실행 하고 종룔
-                    }
-                })
+                .tasklet(new CustomTasklet())
+                .allowStartIfComplete(false)
                 .build();
     }
 
@@ -56,13 +51,16 @@ public class HelloJobConfiguration {
                     @Override
                     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
                         System.out.println(" >> Hello Spring batch step 2");
-                        contribution.setExitStatus(ExitStatus.FAILED);
+                        //contribution.setExitStatus(ExitStatus.FAILED);
+                        //throw new RuntimeException(" Exception !");
                         return RepeatStatus.FINISHED; // 한번만 실행 하고 종룔
                     }
                 })
+                .startLimit(3)
                 .build();
     }
 
+    // chunk 기반 tasklet
     @Bean
     public Step helloStep3() {
         return stepBuilderFactory.get("step3")

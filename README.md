@@ -78,7 +78,10 @@ jobBUilderFactory -> jobBuilder -> Tasklett->SimpleJobBuilder (start, next, on, 
    jobLauncher -jobparameter-jobinstance-JobExcution-> simplejob -jobListner-> step -StepExcution-ExcutionContext-> taklet
    ![img.png](img2/img.png)
 2. Job parameter 
-   1. --job.name=batchjob name=user1 요렇게 줄 수 있다. 
+```
+  1. --job.name=batchjob name=user1 요렇게 줄 수 있다. 
+```
+
    2. job parameter 롤 job을 식별함으로 job parameter를 자동 증가시켜 job을 계속 실행 시켜줄 수 있다. 
 
 ## Step
@@ -92,3 +95,57 @@ jobBUilderFactory -> jobBuilder -> Tasklett->SimpleJobBuilder (start, next, on, 
       6. 인자에 따라 다르게 생성됨
 
 진도 StepBuildFactory ---- 15:45
+
+2. taskletstep
+   1. repeatTemplate 을 사용 
+   2. Task 와 chunk 기반으로 나눠서 실행 
+   3. 일반적인 tasklet 과 chunk oriented 한 tasklet 이 존재 
+      1. chunk 하나의 큰 덩어리를 쪼개서 실행 예) 대용양의 디비 처리를 좀 나눠서 처리 한다. 
+         1. itemReader, itemWriter, itemProcessor
+      2. Task 기반: 단일 작업 댜량 처리는 좀 복잡함 대용량 처리는 chunk 기반을 추천 
+   ![img.png](img.png)
+   4. stepBuilderFactory > StepBuilder > TaskletStepBuilder > TaskletStep
+   ```
+   stepBuilderFactory.get("batchstep")
+   .tasklet(tasklet)
+   .startLimit() // 실행 회수 설정 실행 회수 초과시 Exception 발생  
+   .allowStartIfComplete // 실패하든 성공하든 재시작 
+   .listener() //callback 
+   .build()
+   ```
+   5. step 이 teaklet 을 수행 
+      1. tasklet 은 리핏 스테이터스 혹은 예외가 발생할때 까지 계속 돈다. 
+   6. Step 은 오직 한개의 Tasklet 만 수행한다. 
+   7. job -> step -> repeatTemplate -> Tasklet -> Bussiness Logic -> Exception
+   8. taskletstep 실행
+   9. ![img_1.png](img_1.png)
+
+## flow 
+Job의 일종 
+1. Step 을 순차적으로 구성하는게 아니라 조건에 따라 흐름을 전환해야 하는 경우 
+2. 사용처 
+   1. step 이 실패 하더라도 job은 계속 수행되도록 해야 하는 경우 
+   2. step 이 성공 했을때 다음 step 을 구분해서 실행 해야 하는 경우 
+   3. 특정 스텝은 전혀 실행 시켜선 안되는 경우 
+3. SimpleJob 과 마찬가지로 JobBuilderFactory 로부터 생성된다. 
+```java
+jobBuilderFactory.get("batchJob")
+        .start(step)
+        .on(string pattern) // step 의 종료상태를 캐치함 
+        .to(step)
+        .stop() / .fail() / .end() / StopAndRestart()
+        .from(step)
+        .next(step)
+        .end()
+        .build()
+
+```
+4. BatchStatus, ExistStatus, FlowExcutionStatus
+   1. BatchStatus - job, step excution 의 속성 ( job 과 step 이 어떻게 종료되었는지를 저장 )
+   2. FlowExcutionStatus 값은 Step 의 ExitStatus 값으로 이루어짐 
+   3. 마지막 flow 의 값이 최종 flow 의 상태값이 된다. 
+5. batch status : completed, starting, started, stopping, stoped, failed, abondon, unknown,
+6. exit status : 종료가 어떤 상태로 되었는지 unknown, excuting, completed noop failed stopped 
+7. flow Excution status : flow 최종 실행 결과가 무엇인지 지정 
+
+진도 transition - 배치 상태 유형 16:47
