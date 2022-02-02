@@ -131,10 +131,10 @@ Job의 일종
 ```java
 jobBuilderFactory.get("batchJob")
         .start(step)
-        .on(string pattern) // step 의 종료상태를 캐치함 
-        .to(step)
+        .on(string pattern) // step 의 종료상태를 캐치함 ExsitStatus 와 메칭한다. 
+        .to(step) //다음으로 실행할 단계를 지정 
         .stop() / .fail() / .end() / StopAndRestart()
-        .from(step)
+        .from(step) // 추가 transition
         .next(step)
         .end()
         .build()
@@ -147,5 +147,19 @@ jobBuilderFactory.get("batchJob")
 5. batch status : completed, starting, started, stopping, stoped, failed, abondon, unknown,
 6. exit status : 종료가 어떤 상태로 되었는지 unknown, excuting, completed noop failed stopped 
 7. flow Excution status : flow 최종 실행 결과가 무엇인지 지정 
+8. Transition 조건에 따라 플로우를 다르게 할 수 있는 기능 
 
-진도 transition - 배치 상태 유형 16:47
+9. 스프링 배치 - 빈의 실행 시점에 빈이 생성 된다. 일반적인 싱글톤 패턴이랑은 다름 
+10. 어플리케이션 구동 시점엔 Proxy Bean 이 생성된다. 
+11. 쓰레드 마다 생성된 스코프 빈이 할당 되기 때문에 thread safe 하다. 
+12. jobScope, stepScope @Value 를 사용하고 싶을떄 사용 
+
+## chunk 
+1. 여러개의 아이템을 묶은 하나의 덩어리 혹은 블록
+2. chunk 단위로 commit 과 rollback 이 이루어짐 
+3. Chunk 종류 
+   1. chunk<I> item reader 에서 읽은 아이템을 chunk 에서 정한 갯수만큼 반복해서 저장하는 타입 
+   2. chunk<o> item reader 에서 받은 데이터를 item processor 에서 적절하게 가공한 뒤 필터링하여 item writer 에게 전달 
+![img_2.png](img_2.png)
+   
+4. itemStream - 파일등을 읽어서 처리하고 싶을때 

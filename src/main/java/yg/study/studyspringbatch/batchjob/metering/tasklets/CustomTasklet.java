@@ -1,4 +1,4 @@
-package yg.study.studyspringbatch;
+package yg.study.studyspringbatch.batchjob.metering.tasklets;
 
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
@@ -10,7 +10,7 @@ public class CustomTasklet implements Tasklet {
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 
         String stepName = contribution.getStepExecution().getStepName();
-        System.out.println(" >> Custom Tasklet step 11111 ");
+        System.out.println(" >> Custom Tasklet step 11111 step name = " + stepName);
 
         //business Logic
         return RepeatStatus.FINISHED;
