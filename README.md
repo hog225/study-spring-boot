@@ -163,3 +163,6 @@ jobBuilderFactory.get("batchJob")
 ![img_2.png](img_2.png)
    
 4. itemStream - 파일등을 읽어서 처리하고 싶을때 
+
+## 멀티 쓰레드 
+1. 
