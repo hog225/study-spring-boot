@@ -128,7 +128,7 @@ Job의 일종
    2. step 이 성공 했을때 다음 step 을 구분해서 실행 해야 하는 경우 
    3. 특정 스텝은 전혀 실행 시켜선 안되는 경우 
 3. SimpleJob 과 마찬가지로 JobBuilderFactory 로부터 생성된다. 
-```java
+```text
 jobBuilderFactory.get("batchJob")
         .start(step)
         .on(string pattern) // step 의 종료상태를 캐치함 ExsitStatus 와 메칭한다. 

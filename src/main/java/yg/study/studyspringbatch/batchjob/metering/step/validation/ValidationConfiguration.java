@@ -1,4 +1,4 @@
-package yg.study.studyspringbatch.batchjob.metering.validation;
+package yg.study.studyspringbatch.batchjob.metering.step.validation;
 
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersInvalidException;

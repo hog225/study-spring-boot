@@ -11,7 +11,7 @@ import org.springframework.batch.core.repository.JobExecutionAlreadyRunningExcep
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import yg.study.studyspringbatch.batchjob.metering.MeteringJob;
+import yg.study.studyspringbatch.config.JobConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,10 +20,11 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 public class JobSchduler {
-    private final MeteringJob meteringJob;
+    private final JobConfig meteringJob;
     private final JobLauncher jobLauncher;
 
-    @Scheduled(initialDelay = 10000, fixedDelay = 30000)
+    //@Scheduled(initialDelay = 10000, fixedDelay = 30000)
+    @Scheduled(cron = "3/10 * * * * *")
     public void runJob() {
 
         Map<String, JobParameter> confMap = new HashMap<>();
