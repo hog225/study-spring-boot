@@ -93,3 +93,9 @@
 - https://lifeonroom.com/study-lab/spring-boot-jpa-3/
 - https://github.com/hog225/study-spring-boot/blob/master/memo/README.md // 코드도 같이 참조 .. 
   
+
+## mysql 로그 남기기
+- SHOW VARIABLES LIKE '%general%';
+- SET GLOBAL general_log = ON;
+- &logger=Slf4JLogger&maxQuerySizeToLog=999999 로그 
+- rewriteBatchedStatements bulk insert 할때 

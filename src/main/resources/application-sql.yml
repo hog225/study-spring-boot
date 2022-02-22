@@ -1,0 +1,9 @@
+spring:
+  config:
+    activate:
+      on-profile: sql
+  datasource:
+    url: jdbc:mysql://localhost:3306/test_jpa?characterEncoding=UTF-8&rewriteBatchedStatements=true&jdbcCompliantTruncation=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
