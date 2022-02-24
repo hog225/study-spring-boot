@@ -1,6 +1,7 @@
 package org.yg.study.JPAsample.entity;
 
 import lombok.*;
+import org.yg.study.JPAsample.converter.TruncateStringConverter;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -18,6 +19,7 @@ public class Book {
     private Long seq;
 
     @Column(length = 10)
+    @Convert(converter = TruncateStringConverter.class)
     String name;
 
     @Column()
