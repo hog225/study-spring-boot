@@ -12,7 +12,10 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import yg.study.studyspringbatch.config.JobConfig;
+import yg.study.studyspringbatch.domain.book.Book;
+import yg.study.studyspringbatch.domain.book.BookRepository;
 
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +25,7 @@ import java.util.Map;
 public class JobSchduler {
     private final JobConfig meteringJob;
     private final JobLauncher jobLauncher;
+    private final BookRepository bookRepository;
 
     //@Scheduled(initialDelay = 10000, fixedDelay = 30000)
     @Scheduled(cron = "3/10 * * * * *")
@@ -34,6 +38,8 @@ public class JobSchduler {
         try {
 
             jobLauncher.run(meteringJob.job(), jobParameters);
+            Book book = Book.create("33", ZonedDateTime.now());
+            bookRepository.save(book);
 
         } catch (JobExecutionAlreadyRunningException | JobInstanceAlreadyCompleteException
                 | JobParametersInvalidException | org.springframework.batch.core.repository.JobRestartException e) {
