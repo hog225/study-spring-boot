@@ -21,9 +21,14 @@ spring:
 #      driver-class-name: org.h2.Driver
   batch:
     jdbc:
-      initialize-schema: never
+      initialize-schema: always
     job:
       enabled: false
+  task:
+    scheduling:
+      pool:
+        size: 10
+      thread-name-prefix: scheduled-task
   jpa:
     open-in-view: false
     show-sql: true

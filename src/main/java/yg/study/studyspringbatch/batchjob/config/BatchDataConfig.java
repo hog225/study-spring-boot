@@ -40,12 +40,12 @@ import javax.sql.DataSource;
 ////        return factory.getObject();
 ////    }
 //}
-@Configuration
-@EnableBatchProcessing
-public class BatchDataConfig extends DefaultBatchConfigurer {
-
-    @Override
-    public void setDataSource(DataSource dataSource) {
-        // If we don't provide a datasource, an in-memory map will be used.
-    }
-}
+//@Configuration
+//@EnableBatchProcessing
+//public class BatchDataConfig extends DefaultBatchConfigurer {
+//
+//    @Override
+//    public void setDataSource(DataSource dataSource) {
+//        // If we don't provide a datasource, an in-memory map will be used.
+//    }
+//}

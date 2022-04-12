@@ -20,7 +20,6 @@ public class JobConfig {
     @Bean
     public Job job(){
         return jobBuilderFactory.get(JOB_NAME)
-                .incrementer(new RunIdIncrementer())
                 .start(meterSteps.chunkStep())
                 .next(meterSteps.chunkStep())
                 .next(meterSteps.meterCreateStep())
