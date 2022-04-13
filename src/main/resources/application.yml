@@ -24,11 +24,25 @@ spring:
       initialize-schema: always
     job:
       enabled: false
-  task:
-    scheduling:
-      pool:
-        size: 10
-      thread-name-prefix: scheduled-task
+#  task:
+#    scheduling:
+#      pool:
+#        size: 10
+#      thread-name-prefix: scheduled-task
+  quartz:
+    scheduler-name: batch-Schedule
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+    overwrite-existing-jobs: true
+    properties:
+      org:
+        quartz:
+          jobStore:
+            useProperties: true
+            isClustered: true
+
+
   jpa:
     open-in-view: false
     show-sql: true
