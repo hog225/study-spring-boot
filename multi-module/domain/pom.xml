@@ -14,6 +14,11 @@
 
 
 	<dependencies>
+		<dependency>
+			<groupId>com.yg</groupId>
+			<artifactId>external</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

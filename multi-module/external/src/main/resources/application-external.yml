@@ -1,0 +1,4 @@
+
+apipublic:
+  proto: https
+  url: api.publicapis.org

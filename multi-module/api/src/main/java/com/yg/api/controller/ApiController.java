@@ -1,4 +1,4 @@
-package com.yg.api.web.controller;
+package com.yg.api.controller;
 
 import com.yg.domain.book.entity.Book;
 import com.yg.domain.book.service.BookService;

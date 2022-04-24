@@ -5,6 +5,8 @@ import com.yg.domain.book.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BookService {
@@ -12,6 +14,10 @@ public class BookService {
 
     public Book getBookById(Long id) {
         return bookRepository.findById(id).orElse(new Book());
+    }
+
+    public void insertBookAll(List<Book> book) {
+        bookRepository.saveAll(book);
     }
 
 }
