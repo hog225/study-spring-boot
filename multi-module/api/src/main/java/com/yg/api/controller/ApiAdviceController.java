@@ -18,7 +18,7 @@ public class ApiAdviceController {
     public BookGetRequestWithHeader addSomething(@RequestHeader(value="KEY", required = true) String key) {
         return BookGetRequestWithHeader.builder().key(key).build();
     }
-//https://stackoverflow.com/questions/36295095/how-to-decorate-all-requests-to-take-a-value-from-header-and-add-it-in-the-body 이거 시도해 보자 
+//https://stackoverflow.com/questions/36295095/how-to-decorate-all-requests-to-take-a-value-from-header-and-add-it-in-the-body 이거 시도해 보자
     @GetMapping("/allTest3")
     public ResponseEntity<BookGetRequestWithHeader> getAllBookWithHeader(
             @Valid BookGetRequestWithHeader bookGetRequestWithHeader
