@@ -19,7 +19,6 @@ public class BookGetRequestWithHeader extends BookCategoryRequest{
     @NotNull
     private String bookName;
 
-
     @NotNull
     private String writer;
 
