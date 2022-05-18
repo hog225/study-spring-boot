@@ -1,0 +1,19 @@
+server.port: 8003
+server.error.include-message: always
+
+spring.cloud.stream:
+  defaultBinder: rabbit
+  default.contentType: application/json
+  bindings.output:
+    destination: stream-exchange
+    group: stream-comsumer-queue
+  bindings.new-output:
+    destination: stream-exchange-other
+
+
+
+spring.rabbitmq:
+  host: 127.0.0.1
+  port: 5672
+  username: guest
+  password: guest

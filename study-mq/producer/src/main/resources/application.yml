@@ -1,0 +1,23 @@
+server:
+  port: 8001
+  address: 0.0.0.0
+
+#spring.cloud.stream:
+#  defaultBinder: rabbit
+#  default.contentType: application/json
+#  bindings:
+
+mq:
+  exchange-name: mart.topic
+  queue-name: cashier.queue
+  queue-name1: tasting.queue
+  routing-key: buy.stuff.#
+  routing-key1: eat.stuff.#
+
+spring.rabbitmq:
+  host: 127.0.0.1
+  port: 5672
+  username: guest
+  password: guest
+
+spring.rabbitmq.host: rabbitmq
