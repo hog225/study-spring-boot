@@ -1,0 +1,14 @@
+
+spring:
+  quartz:
+    scheduler-name: batch-Schedule
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+    overwrite-existing-jobs: true
+    properties:
+      org:
+        quartz:
+          jobStore:
+            useProperties: true
+            isClustered: true

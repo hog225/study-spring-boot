@@ -23,6 +23,11 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation('mysql:mysql-connector-java')
+	// https://mvnrepository.com/artifact/net.javacrumbs.shedlock/shedlock-spring
+	implementation 'net.javacrumbs.shedlock:shedlock-spring:4.38.0'
+// https://mvnrepository.com/artifact/net.javacrumbs.shedlock/shedlock-provider-jdbc-template
+	implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:4.38.0'
+
 }
 
 test {

@@ -3,14 +3,18 @@ package yg.study.studyspringbatch.config;
 import lombok.RequiredArgsConstructor;
 import org.quartz.*;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import yg.study.studyspringbatch.scheduler.QuartzJob;
 
 import javax.annotation.PostConstruct;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 
 @Configuration
 @RequiredArgsConstructor
+@Profile("quartz-batch")
 public class QuartzConfig {
 
     private final SchedulerFactoryBean schedulerFactory;
@@ -19,11 +23,11 @@ public class QuartzConfig {
     public void scheduled() throws SchedulerException {
         JobDataMap map1 = new JobDataMap(Collections.singletonMap("num", "1"));
         JobDataMap map2 = new JobDataMap(Collections.singletonMap("num", "2"));
-        JobDetail job1 = jobDetail("hello1", "hello-group", map1);
-        JobDetail job2 = jobDetail("hello2", "hello-group", map2);
-        SimpleTrigger trigger1 = trigger("trigger1", "trigger-group");
-        SimpleTrigger trigger2 = trigger("trigger2", "trigger-group");
-        schedulerFactory.getObject().scheduleJob(job1, trigger1);
+        JobDetail jobONE = jobDetail("hello1", DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm:ss").format(ZonedDateTime.now()), map1);
+        JobDetail job2 = jobDetail("hello2", DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm:ss").format(ZonedDateTime.now()), map2);
+        SimpleTrigger trigger1 = trigger("trigger1", "trigger-group" + DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm:ss").format(ZonedDateTime.now()));
+        SimpleTrigger trigger2 = trigger("trigger2", "trigger-group" + DateTimeFormatter.ofPattern("dd/MM/yyyy - hh:mm:ss").format(ZonedDateTime.now()));
+        schedulerFactory.getObject().scheduleJob(jobONE, trigger1);
         schedulerFactory.getObject().scheduleJob(job2, trigger2);
     }
 

@@ -5,8 +5,10 @@ import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.springframework.context.annotation.Profile;
 
 @Log4j2
+@Profile("quartz-batch")
 public class QuartzJob implements Job {
 
     @Override

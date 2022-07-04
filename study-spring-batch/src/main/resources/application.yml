@@ -2,7 +2,10 @@
 
 
 spring:
-#  mysql
+#  profiles:
+#    active: pure-batch # qurtz 테스트시 삭제
+
+  #  mysql
   datasource:
     url: jdbc:mysql://localhost:3306/test_batch?characterEncoding=UTF-8&rewriteBatchedStatements=true&jdbcCompliantTruncation=false
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -24,23 +27,12 @@ spring:
       initialize-schema: always
     job:
       enabled: false
-#  task:
-#    scheduling:
-#      pool:
-#        size: 10
-#      thread-name-prefix: scheduled-task
-  quartz:
-    scheduler-name: batch-Schedule
-    job-store-type: jdbc
-    jdbc:
-      initialize-schema: never
-    overwrite-existing-jobs: true
-    properties:
-      org:
-        quartz:
-          jobStore:
-            useProperties: true
-            isClustered: true
+  task:
+    scheduling:
+      pool:
+        size: 10
+      thread-name-prefix: scheduled-task
+
 
 
   jpa:
@@ -58,3 +50,9 @@ spring:
         use_sql_comments: true
         globally_quoted_identifiers: true
         #generate_statistics: true
+
+logging:
+  level:
+    net:
+      javacrumbs:
+        shedlock: DEBUG

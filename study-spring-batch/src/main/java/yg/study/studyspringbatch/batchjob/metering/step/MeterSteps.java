@@ -34,6 +34,13 @@ public class MeterSteps {
     }
 
     @Bean
+    public Step meterCreateStepTwo(){
+        return stepBuilderFactory.get("MeterCreateTwo")
+                .tasklet(new MeterCreateTasklet())
+                .build();
+    }
+
+    @Bean
     public Step chunkStep() {
         return stepBuilderFactory.get("chunkStep")
             // chunk 기반의 작업

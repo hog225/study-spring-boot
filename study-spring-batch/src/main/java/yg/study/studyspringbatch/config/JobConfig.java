@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import yg.study.studyspringbatch.batchjob.metering.step.MeterSteps;
 
 import static yg.study.studyspringbatch.common.Constant.JOB_NAME;
+import static yg.study.studyspringbatch.common.Constant.JOB_NAME_TWO;
 
 @RequiredArgsConstructor
 @Configuration
@@ -23,6 +24,14 @@ public class JobConfig {
                 .start(meterSteps.chunkStep())
                 .next(meterSteps.chunkStep())
                 .next(meterSteps.meterCreateStep())
+                .build();
+    }
+
+    @Bean
+    public Job job2(){
+        return jobBuilderFactory.get(JOB_NAME_TWO)
+                .incrementer(new RunIdIncrementer())
+                .start(meterSteps.meterCreateStepTwo())
                 .build();
     }
 }
