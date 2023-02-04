@@ -1,0 +1,4 @@
+rootProject.name = 'client-lb'
+
+include ':app-lb'
+include ':dummy-server-one'
