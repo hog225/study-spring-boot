@@ -24,8 +24,8 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'org.springframework.boot:spring-boot-starter-integration:3.0.3'
-
+    implementation 'org.springframework.boot:spring-boot-starter-integration:2.7.7'
+    implementation 'org.springframework.integration:spring-integration-ip'
 }
 
 tasks.named('test') {
