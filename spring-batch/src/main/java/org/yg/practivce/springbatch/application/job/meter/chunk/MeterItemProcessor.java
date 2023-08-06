@@ -30,7 +30,8 @@ public class MeterItemProcessor implements ItemProcessor<Product, ProductMeters>
 
             if (item.getName().equals("p-3")) {
                 /**
-                 *  하기 Exception 이 발생 하더라도 처리된 Chunk 는 Rollback 되지 않는다.
+                 *  하기 Exception 이 발생 하더라도 이미 처리된 Chunk 는 Rollback 되지 않는다.
+                 *  Processor 에서 return null 을 하게 되면 itemWriter 에서 처리하지 않는다. 
                  */
                 throw new RuntimeException("product3 is not allowed");
             }
@@ -38,6 +39,7 @@ public class MeterItemProcessor implements ItemProcessor<Product, ProductMeters>
             if (item.getName().equals("p-2")) {
                 /**
                  *  ItemWriter 에서 Exception 이 발생한다. skip 옵션으로 인해 Exception 발생해도 해당 chunk 는 롤백 되고 Job 은 계속 이어진다.
+                 *  만약 Skip 옵션이 없다면 Exception 발생 시점에 잡이 정지 한다.
                  */
                 meters.get(0).setName("meter-" + "1" + item.getProductKey());
             }
