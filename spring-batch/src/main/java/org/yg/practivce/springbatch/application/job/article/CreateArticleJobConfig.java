@@ -1,4 +1,4 @@
-package org.yg.practivce.springbatch.application.job;
+package org.yg.practivce.springbatch.application.job.article;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +21,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.yg.practivce.springbatch.application.job.param.CreateArticleJobParam;
+import org.yg.practivce.springbatch.application.job.article.param.CreateArticleJobParam;
 import org.yg.practivce.springbatch.application.model.ArticleModel;
-import org.yg.practivce.springbatch.domain.entity.Article;
-import org.yg.practivce.springbatch.domain.repository.ArticleRepository;
+import org.yg.practivce.springbatch.domain.article.Article;
+import org.yg.practivce.springbatch.domain.article.repository.ArticleRepository;
 
 // Job이 실행중에 종료가 되면 batch_job_excution EXIT_CODE 가 UNKNOWN일 거다 이 상태에서 같은 Job ID 로 Batch를 실행 시키면 실행이 되지 않는다.
 @Configuration

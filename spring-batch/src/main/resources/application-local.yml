@@ -1,14 +1,21 @@
 
 spring:
+  main:
+    web-application-type: none
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3308/springbatch?rewriteBatchedStatements=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springbatch?rewriteBatchedStatements=true
     username: root
     password: root
   batch:
-    initialize-schema: always
+    jdbc:
+      initialize-schema: always
     job:
-      names: ${job.name:createArticleJob} #JOB Name이 넘어오면 Job을 실행하고 그렇지 않으면 실행 하지 않음
+      names: ${job.name:NONE}
+      enabled: false
+  #      name: meterJob
+#      names: ${job.name:createArticleJob} #JOB Name이 넘어오면 Job을 실행하고 그렇지 않으면 실행 하지 않음
+
   jpa:
     generate-ddl: true
     hibernate:
@@ -16,3 +23,8 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+
+logging:
+  level:
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG

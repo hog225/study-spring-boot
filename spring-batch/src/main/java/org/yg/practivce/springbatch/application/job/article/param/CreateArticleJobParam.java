@@ -1,4 +1,4 @@
-package org.yg.practivce.springbatch.application.job.param;
+package org.yg.practivce.springbatch.application.job.article.param;
 
 import lombok.Getter;
 import org.springframework.batch.core.configuration.annotation.JobScope;
