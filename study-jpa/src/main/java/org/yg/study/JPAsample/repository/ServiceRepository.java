@@ -9,10 +9,12 @@ import org.yg.study.JPAsample.entity.ServiceKey;
 
 import javax.persistence.LockModeType;
 import java.util.List;
+import java.util.Optional;
 
 public interface ServiceRepository extends JpaRepository<ServiceEntity, ServiceKey> {
 
-    @Lock(LockModeType.PESSIMISTIC_READ)
-    List<ServiceEntity> findByKeyServiceId(String serviceId);
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    Optional<ServiceEntity> findByKeyServiceIdAndKeyServiceType(String serviceId, String serviceType);
+
 
 }

@@ -99,3 +99,8 @@
 - SET GLOBAL general_log = ON;
 - &logger=Slf4JLogger&maxQuerySizeToLog=999999 로그 
 - rewriteBatchedStatements bulk insert 할때 
+
+
+## Lock
+- 비관적 락 
+  - 비관적 락이 걸리면 다른 트렌젝션은 대기한다. 
