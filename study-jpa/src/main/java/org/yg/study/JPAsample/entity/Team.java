@@ -2,6 +2,7 @@ package org.yg.study.JPAsample.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,7 +20,10 @@ public class Team extends BaseEntity{
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "team",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Member> members = new ArrayList<>();
 

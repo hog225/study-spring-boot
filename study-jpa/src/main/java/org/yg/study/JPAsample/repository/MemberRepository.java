@@ -12,6 +12,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 import org.yg.study.JPAsample.dto.MemberDto;
 import org.yg.study.JPAsample.entity.Member;
+import org.yg.study.JPAsample.entity.Team;
 
 import javax.persistence.LockModeType;
 import javax.persistence.QueryHint;
@@ -25,6 +26,8 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
     List<Member> findByUsernameAndAgeGreaterThan(String username, int age);
 
     List<Member> findByUsernameIgnoreCase(String username);
+
+    List<Member> findByTeam(Team team);
 
     @Query(value = "select m from Member m where m.username = :username")
     List<Member> findByUsername(@Param("username") String username);

@@ -8,9 +8,11 @@ import org.yg.study.JPAsample.entity.Team;
 import org.yg.study.JPAsample.repository.MemberRepository;
 import org.yg.study.JPAsample.repository.TeamRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class MemberTeamSave {
+public class MemberTeamService {
     private final TeamRepository teamRepository;
     private final MemberRepository memberRepository;
 
@@ -20,6 +22,22 @@ public class MemberTeamSave {
         memberRepository.save(new Member("memberA" + i));
         teamRepository.save(new Team("teamA" + i));
 
+    }
+
+    @Transactional
+    public void createTeamAndMember(Team team, List<Member> members) {
+        teamRepository.save(team);
+        memberRepository.saveAll(members);
+    }
+
+    public List<Member> getMembersByTeam(Team team) {
+        return memberRepository.findByTeam(team);
+    }
+
+    @Transactional
+    public void updateMember(Team team, List<Member> members) {
+        team.setMembers(members);
+        teamRepository.save(team);
     }
 
 }

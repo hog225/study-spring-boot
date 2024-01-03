@@ -1,21 +1,11 @@
 package org.yg.study.JPAsample.controller;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.yg.study.JPAsample.entity.Member;
-import org.yg.study.JPAsample.entity.Team;
-import org.yg.study.JPAsample.repository.MemberRepository;
-import org.yg.study.JPAsample.repository.TeamRepository;
-import org.yg.study.JPAsample.service.MemberTeamSave;
+import org.yg.study.JPAsample.service.MemberTeamService;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @Profile("local")
 @Component
@@ -51,12 +41,12 @@ public class InitMember {
     @Component
     @RequiredArgsConstructor
     static class InitMemberService {
-        private final MemberTeamSave memberTeamSave;
+        private final MemberTeamService memberTeamService;
 
         public void init(){
 
             for (int i=0; i< 3; i++) {
-                memberTeamSave.save(i);
+                memberTeamService.save(i);
             }
         }
 
