@@ -14,6 +14,7 @@ import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,7 @@ import static yg.study.studyspringbatch.common.Constant.JOB_NAME_TWO;
 @Component
 @RequiredArgsConstructor
 @EnableSchedulerLock(defaultLockAtMostFor = "PT10S")
+@Profile("chunk")
 public class JobSchduler {
     private final JobConfig meteringJob;
     private final JobLauncher jobLauncher;

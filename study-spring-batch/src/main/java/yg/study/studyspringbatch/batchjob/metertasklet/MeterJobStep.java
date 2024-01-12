@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-public class MeterStep {
+public class MeterJobStep {
   private final StepBuilderFactory stepBuilderFactory;
   private final JobBuilderFactory jobBuilderFactory;
   private final MeterTasklet meterTasklet;
@@ -27,7 +27,8 @@ public class MeterStep {
   public Job meteringJob() {
     return jobBuilderFactory.get("meteringJob")
         .incrementer(new RunIdIncrementer())
-        .start()
+        .start(meteringStep())
+        .build();
   }
 
 
