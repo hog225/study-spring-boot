@@ -24,7 +24,7 @@ public class Instance extends BaseEntity {
     private String os;
 
     @ManyToOne
-    @JoinColumn(name = "instance_id")
+    @JoinColumn(name = "auto_scaling_group")
     private Instance autoScalingGroup;
 
     @OneToMany(mappedBy = "autoScalingGroup",

@@ -18,7 +18,7 @@ public class InstanceNetwork extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "network_id")
-    private String networkId;
+    private Long networkId;
 
     private String privateIp;
 

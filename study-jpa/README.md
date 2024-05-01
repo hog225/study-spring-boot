@@ -104,3 +104,24 @@
 ## Lock
 - 비관적 락 
   - 비관적 락이 걸리면 다른 트렌젝션은 대기한다. 
+
+
+# MySql 로그 
+
+SET global general_log = on;
+SET GLOBAL slow_query_log = 'ON';
+SET global general_log_file='/var/log/mysql/mysql.log';
+SET global log_output = 'file';
+
+다만 주의 할점은 Docker Mysql 에 접속하여 /var/log/mysql/mysql.log  파일을 만들어야 하고 해당 파일에 권한을 충분히 줘야 한다.
+
+touch /var/log/mysql/mysql.log
+chmod 777 /var/log/mysql/mysql.log
+참고
+https://stackoverflow.com/questions/39708213/enable-logging-in-docker-mysql-container
+
+빈로그
+SHOW BINARY LOGS;
+SHOW VARIABLES LIKE 'log_bin';
+
+MYSQL Container 의 경우 /var/lib/mysql 에 존재

@@ -47,8 +47,8 @@ logging:
       springframework:
         transaction:
           interceptor: trace
-#    org.springframework.transaction: DEBUG
-#    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG
+    org.springframework.orm.jpa: DEBUG
 #    org.hibernate.SQL: debug
 #    org.hibernate.type: trace # 파라미터를 같이 보여줌
 

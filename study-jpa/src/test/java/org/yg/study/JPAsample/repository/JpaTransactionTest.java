@@ -53,6 +53,35 @@ class JpaTransactionTest {
     }
 
     @Test
+    void testSave() {
+        for(int i=0; i<10; i++) {
+            ServiceEntity serviceEntity = ServiceEntity.builder()
+                    .key(ServiceKey.builder()
+                            .serviceId("serviceId" + i)
+                            .serviceType("serviceType" + i)
+                            .build())
+                    .name("name" + i)
+                    .build();
+            serviceRepository.save(serviceEntity);
+        }
+    }
+
+    @Test
+    @Transactional
+    void testSaveWithTransactional() {
+        for(int i=0; i<10; i++) {
+            ServiceEntity serviceEntity = ServiceEntity.builder()
+                    .key(ServiceKey.builder()
+                            .serviceId("serviceId" + i)
+                            .serviceType("serviceType" + i)
+                            .build())
+                    .name("name" + i)
+                    .build();
+            serviceRepository.save(serviceEntity);
+        }
+    }
+
+    @Test
     @Transactional
     @Rollback(value = false)
     void testTransaction() {

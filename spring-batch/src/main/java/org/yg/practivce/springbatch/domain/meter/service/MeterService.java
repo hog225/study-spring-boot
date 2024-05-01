@@ -17,6 +17,7 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 public class MeterService {
     private final ProductRepository productRepository;
+    private final ProductService productService;
     private final MeterRepository meterRepository;
 
     @PostConstruct
@@ -36,6 +37,28 @@ public class MeterService {
         }
 
         meterRepository.deleteAll();
+    }
+
+    public void updateMeter() {
+        try {
+            System.out.println("MeterService.updateMeter");
+            var products = productRepository.findAll();
+            for (var product : products) {
+                var count = 100;
+                var meters = IntStream.range(0, 3).mapToObj(i -> {
+                    return Meter.builder()
+                            .count(count)
+                            .name("meter-" + i + product.getProductKey())
+                            .productKey(product.getProductKey())
+                            .build();
+                }).collect(Collectors.toList());
+                product.setUpdatedAt(ZonedDateTime.now());
+                productService.updateOrSaveProduct(product);
+                meterRepository.saveAll(meters);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }

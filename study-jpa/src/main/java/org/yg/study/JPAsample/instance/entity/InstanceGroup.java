@@ -18,7 +18,7 @@ public class InstanceGroup extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
-    private String groupId;
+    private Long groupId;
 
     private String name;
 
