@@ -80,11 +80,19 @@
   - 서브쿼리는 높은 확률로 join으로 변경 가능하다. 
   - 쿼리 두번 실행 
   - native sql 
-### Query DSL 
+
+## Query DSL 
+- fetch Join 사용시 Projection 을 같이 쓸 수 없다.
+- left join fetch 너무 많이 하면 당연히 성능에 안좋다. 
+- Entity 에서 @OneToMany 필드가 여러개 일때 fetch join 시 @OneToMany 필드의 데이터 타입이 Set 이어야 한다. 
 - QueryDslTest 참조 
 - https://www.inflearn.com/course/Querydsl-%EC%8B%A4%EC%A0%84/lecture/30125?tab=curriculum 
 - Custom Reposiotry
 ![img.png](img/img.png)
+
+## manytomany package
+- golfer 도메인으로 JPA 스터디를 진행 한다. 
+- 
 
 
 ### 참조 
