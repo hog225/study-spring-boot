@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-@IdClass(GolferGearEntityId.class)
+@IdClass(GolferClothesEntityId.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString

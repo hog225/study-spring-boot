@@ -1,6 +1,7 @@
 package org.yg.study.JPAsample.manytomany.entity;
 
 import lombok.*;
+import org.yg.study.JPAsample.manytomany.converter.ClubStructureConverter;
 import org.yg.study.JPAsample.manytomany.enums.ClubStructureType;
 
 import javax.persistence.*;
@@ -20,13 +21,13 @@ public class ClubStructureEntity {
 
 
     @Column(name = "type", length = 50, nullable = false)
-    @Convert(converter = ClubStructureType.class)
+    @Convert(converter = ClubStructureConverter.class)
     private ClubStructureType type;
 
     private String manufacturer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gear_seq")
+    @JoinColumn(name = "gear_id")
     private GearEntity club;
 
 

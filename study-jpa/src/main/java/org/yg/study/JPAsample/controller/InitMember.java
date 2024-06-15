@@ -46,7 +46,7 @@ public class InitMember {
         public void init(){
 
             for (int i=0; i< 3; i++) {
-                memberTeamService.save(i);
+//                memberTeamService.save(i);
             }
         }
 

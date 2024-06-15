@@ -35,14 +35,14 @@ public class GearEntity {
     private String caddyBagId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "caddy_bag_id", referencedColumnName = "gearId", insertable = false, updatable = false)
+    @JoinColumn(name = "caddy_bag_id", referencedColumnName = "gear_id", insertable = false, updatable = false)
     private GearEntity caddyBag;
 
     @OneToMany(mappedBy = "caddyBag")
     private Set<GearEntity> clubs = new HashSet<>();
 
 
-    @OneToMany(mappedBy = "gear", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     @ToString.Exclude
     private Set<ClubStructureEntity> clubStructures = new HashSet<>();

@@ -92,7 +92,8 @@
 
 ## manytomany package
 - golfer 도메인으로 JPA 스터디를 진행 한다. 
-- 
+- ![img.png](img.png)
+- p6spy 설정 내용 https://github.com/HomoEfficio/dev-tips/blob/master/p6spy-%EC%84%A4%EC%A0%95.md
 
 
 ### 참조 

@@ -32,15 +32,10 @@ public class ClothesEntity {
     @Column(name = "type", length = 10, nullable = false)
     private String type;
 
-
-    @OneToMany(mappedBy = "gear", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "clothes", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     @ToString.Exclude
-    private Set<ClubStructureEntity> clubStructures = new HashSet<>();
+    private Set<GolferClothesEntity> clothes = new HashSet<>();
 
-    @OneToMany(mappedBy = "gear", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    @ToString.Exclude
-    private Set<GolferGearEntity> golferGears = new HashSet<>();
 
 }
