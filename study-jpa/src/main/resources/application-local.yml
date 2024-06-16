@@ -4,3 +4,25 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        show_sql: false
+
+logging:
+  level:
+    org:
+      springframework:
+        transaction:
+          interceptor: DEBUG
+    org.springframework.transaction: ERROR
+    org.springframework.orm.jpa: ERROR
+
+#p6spy query logging
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
