@@ -15,4 +15,9 @@ public class UtilService {
         int index = random.nextInt(countryCodes.length);
         return countryCodes[index];
     }
+
+    public static Integer getRandomAge() {
+        Random random = new Random();
+        return random.nextInt(100);
+    }
 }

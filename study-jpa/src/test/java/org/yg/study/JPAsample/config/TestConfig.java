@@ -14,7 +14,7 @@ public class TestConfig {
 
 
     @Bean
-    public JPAQueryFactory QueryDslBeanMake(){
+    public JPAQueryFactory JpaQueryFactory(){
         return new JPAQueryFactory(em);
     }
 }

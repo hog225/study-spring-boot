@@ -27,8 +27,13 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// https://mvnrepository.com/artifact/p6spy/p6spy
-	implementation 'p6spy:p6spy:3.9.1'
+//	// https://mvnrepository.com/artifact/p6spy/p6spy
+//	implementation 'p6spy:p6spy:3.9.1'
+// https://mvnrepository.com/artifact/com.github.gavlyukovskiy/p6spy-spring-boot-starter
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'
+
+// https://mvnrepository.com/artifact/org.springframework.shell/spring-shell-starter
+	implementation 'org.springframework.shell:spring-shell-starter:2.1.15'
 
 
 	implementation 'mysql:mysql-connector-java'

@@ -50,6 +50,14 @@ public class GolferEntity {
     @JoinColumn(name = "field_seq")
     private FieldEntity field;
 
+    public void addGolferGears(Set<GolferGearEntity> entities) {
+        this.gears.addAll(entities);
+    }
+
+    public void addGolferClothes(Set<GolferClothesEntity> entities) {
+        this.clothes.addAll(entities);
+    }
+
 
 
 }

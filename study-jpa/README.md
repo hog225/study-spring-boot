@@ -94,20 +94,19 @@
 - golfer 도메인으로 JPA 스터디를 진행 한다. 
 - ![img.png](img.png)
 - p6spy 설정 내용 https://github.com/HomoEfficio/dev-tips/blob/master/p6spy-%EC%84%A4%EC%A0%95.md
+- createGolfer 에서 gears 가 cascade 로 저장 될때 쿼리가 각개로 나가는 것처럼 보이지만 실제 mysql 로그를 보면 한번에 나간다.
+- p6spy 실제 MySql 에 찍히는 로그가 출력되는건 아님 Test 에서 돌리면 경우에 따라 select 로그만 찍힘 
 
+## Spring Shell
+- CommandShell 코드 참조 
+- Shell 에서 runMyService 명령어를 실행하면 이 메소드가 실행됩니다.
+- Arg 가 있을경우 method 이름 + arg 이름으로 실행해야 합니다.
 
 ### 참조 
 - https://lifeonroom.com/study-lab/spring-boot-jpa-1/
 - https://lifeonroom.com/study-lab/spring-boot-jpa-2/
 - https://lifeonroom.com/study-lab/spring-boot-jpa-3/
 - https://github.com/hog225/study-spring-boot/blob/master/memo/README.md // 코드도 같이 참조 .. 
-  
-
-## mysql 로그 남기기
-- SHOW VARIABLES LIKE '%general%';
-- SET GLOBAL general_log = ON;
-- &logger=Slf4JLogger&maxQuerySizeToLog=999999 로그 
-- rewriteBatchedStatements bulk insert 할때 
 
 
 ## Lock
@@ -115,22 +114,39 @@
   - 비관적 락이 걸리면 다른 트렌젝션은 대기한다. 
 
 
-# MySql 로그 
-
+# MySql 로그
+- 설정 
+```sql
 SET global general_log = on;
 SET GLOBAL slow_query_log = 'ON';
 SET global general_log_file='/var/log/mysql/mysql.log';
 SET global log_output = 'file';
 
-다만 주의 할점은 Docker Mysql 에 접속하여 /var/log/mysql/mysql.log  파일을 만들어야 하고 해당 파일에 권한을 충분히 줘야 한다.
+```
 
+다만 주의 할점은 Docker Mysql 에 접속하여 ```/var/log/mysql/mysql.log```  파일을 만들어야 하고 해당 파일에 권한을 충분히 줘야 한다.
+```bash
 touch /var/log/mysql/mysql.log
 chmod 777 /var/log/mysql/mysql.log
-참고
+```
+- 추가적으로 Volume Mount 를 안했으면 Docker Container 내부로 들어가서 본다.
+
+- 참고
 https://stackoverflow.com/questions/39708213/enable-logging-in-docker-mysql-container
 
-빈로그
+- 빈로그
+```angular2html
 SHOW BINARY LOGS;
 SHOW VARIABLES LIKE 'log_bin';
 
+```
 MYSQL Container 의 경우 /var/lib/mysql 에 존재
+
+* 추가 
+```sql
+SHOW VARIABLES LIKE '%general%';
+SET GLOBAL general_log = ON;
+-- &logger=Slf4JLogger&maxQuerySizeToLog=999999 로그
+-- rewriteBatchedStatements bulk insert 할때
+```
+ 
