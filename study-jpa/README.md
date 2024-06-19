@@ -101,6 +101,8 @@
 - CommandShell 코드 참조 
 - Shell 에서 runMyService 명령어를 실행하면 이 메소드가 실행됩니다.
 - Arg 가 있을경우 method 이름 + arg 이름으로 실행해야 합니다.
+- https://docs.spring.io/spring-shell/reference/commands/registration/annotation.html 요걸 이용해서 환경별로 Shell 빈을 등록 할지 안할지 할 수있을것 같다 .? 
+- ```spring.shell.interactive.enabled = false``` 를 통해 interactive 모드에서 벗어날수 있다. Test 중에는 해당 설정을 false 로 한다. 
 
 ### 참조 
 - https://lifeonroom.com/study-lab/spring-boot-jpa-1/
