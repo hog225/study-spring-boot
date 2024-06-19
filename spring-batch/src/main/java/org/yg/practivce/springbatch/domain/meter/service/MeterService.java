@@ -1,6 +1,5 @@
 package org.yg.practivce.springbatch.domain.meter.service;
 
-import antlr.collections.impl.IntRange;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.yg.practivce.springbatch.domain.meter.Meter;
@@ -8,7 +7,7 @@ import org.yg.practivce.springbatch.domain.meter.Product;
 import org.yg.practivce.springbatch.domain.meter.repository.MeterRepository;
 import org.yg.practivce.springbatch.domain.meter.repository.ProductRepository;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.time.ZonedDateTime;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

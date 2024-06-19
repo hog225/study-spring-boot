@@ -26,6 +26,8 @@ import org.yg.practivce.springbatch.application.model.ArticleModel;
 import org.yg.practivce.springbatch.domain.article.Article;
 import org.yg.practivce.springbatch.domain.article.repository.ArticleRepository;
 
+import java.util.List;
+
 // Job이 실행중에 종료가 되면 batch_job_excution EXIT_CODE 가 UNKNOWN일 거다 이 상태에서 같은 Job ID 로 Batch를 실행 시키면 실행이 되지 않는다.
 @Configuration
 @Slf4j
@@ -103,7 +105,7 @@ public class CreateArticleJobConfig {
     //JPA로 하면 느림
     @Bean
     public ItemWriter<Article> createArticleWriter() {
-        return articles -> jdbcTemplate.batchUpdate("insert into Article (title, content, createdAt) values (?, ? ,?)",
+        return articles -> jdbcTemplate.<Article>batchUpdate("insert into Article (title, content, createdAt) values (?, ? ,?)",
                 articles,
                 100,
                 (ps, article) -> {
