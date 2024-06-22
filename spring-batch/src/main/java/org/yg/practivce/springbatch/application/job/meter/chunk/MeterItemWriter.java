@@ -1,11 +1,9 @@
 package org.yg.practivce.springbatch.application.job.meter.chunk;
 
+import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.transaction.annotation.Transactional;
 import org.yg.practivce.springbatch.domain.meter.ProductMeters;
 import org.yg.practivce.springbatch.domain.meter.repository.MeterRepository;
-
-import java.util.List;
 
 public class MeterItemWriter implements ItemWriter<ProductMeters> {
     private final MeterRepository meterRepository;
@@ -16,8 +14,7 @@ public class MeterItemWriter implements ItemWriter<ProductMeters> {
 
 
     @Override
-
-    public void write(List<? extends ProductMeters> items) {
+    public void write(Chunk<? extends ProductMeters> items) {
 
         for (var item : items) {
 

@@ -12,6 +12,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -34,11 +35,11 @@ public class ContextRefreshedEventListener implements ApplicationListener<Contex
                 log.warn("!!!!!!!!!!{}", jobExcution.getJobId());
                 // job excution 중지
                 jobExcution.setStatus(BatchStatus.STOPPED);
-                jobExcution.setEndTime(new Date());
+                jobExcution.setEndTime(LocalDateTime.now());
                 for (StepExecution stepExecution: jobExcution.getStepExecutions()){
                     if (stepExecution.getStatus().isRunning()){
                         stepExecution.setStatus(BatchStatus.STOPPED);
-                        stepExecution.setEndTime(new Date());
+                        stepExecution.setEndTime(LocalDateTime.now());
                         jobRepository.update(stepExecution);
 
                     }
