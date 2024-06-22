@@ -4,9 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -25,24 +26,28 @@ import org.yg.practivce.springbatch.domain.meter.repository.ProductRepository;
 @Configuration
 @RequiredArgsConstructor
 public class MeterJobConfig {
-    private final JobBuilderFactory jobBuilderFactory;
-    private final StepBuilderFactory stepBuilderFactory;
     private final MeterRepository meterRepository;
     private final ProductRepository productRepository;
     private final PlatformTransactionManager transactionManager;
 
     @Bean
-    public Job meterJob() {
-        return jobBuilderFactory.get("meterJob")
+    public Job meterJob(
+            JobRepository jobRepository,
+            Step meterStep
+    ) {
+        return new JobBuilder("meterJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
-                .start(meterStep())
+                .start(meterStep)
                 .build();
     }
 
     @Bean
-    public Step meterStep() {
-        return stepBuilderFactory.get("meterUpdateStep")
-                .<Product, ProductMeters>chunk(1)
+    public Step meterStep(
+            JobRepository jobRepository,
+            PlatformTransactionManager transactionManager
+    ) {
+        return new StepBuilder("meterUpdateStep", jobRepository)
+                .<Product, ProductMeters>chunk(1, transactionManager)
                 .reader(meterReader())
                 .processor(meterProcessor())
                 .writer(meterWriter())
